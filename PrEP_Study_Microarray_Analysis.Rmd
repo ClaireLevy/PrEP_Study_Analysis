@@ -1,0 +1,363 @@
+---
+title: "PrEP Study Microarray Analysis"
+author: "Claire Levy"
+output: html_document
+---
+
+##Experimental set up
+
+We isolated RNA from four different sample types from 8 donors pre- and post- initiation of prEP. The pre-initation was called "Enrollment"  and  the post-initiation visit was called "Visit2"
+
+Sample Types
+
+ * Duodenal biopsy
+ * Rectal biopsy
+ * PAXgene (whole blood collected into RNA preservative)
+ * PBMC (PBMC isolated from whole blood)
+
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(tidyverse)
+library(lumi)
+library(limma)
+library(pander)
+library(stringr)
+library(reshape2)
+```
+
+```{r read in raw data, cache = TRUE}
+
+#note that the sampleNames are NOT syntactically valid, here (they have "-")
+lumibatch<-lumiR(fileName = "raw_data/2017.04.18.smhughesFinalReport.txt ",
+            detectionTh = 0.05,
+            annotationColumn=c('ENTREZ_GENE_ID','ACCESSION', 'SYMBOL', 'PROBE_SEQUENCE', 'PROBE_START', 'CHROMOSOME', 'PROBE_CHR_ORIENTATION', 'PROBE_COORDINATES', 'DEFINITION'))
+
+
+#read in pData
+
+#Note that my pData file has rownames that match the sampleNames used in the array AND I have a column called sampleNames containing the same data because I'll want to use it later when I make MDS plots and need to merge on sampleNames.  This is annoying but kind of necessary.
+
+pData <-read.table("raw_data/pData.txt", header = TRUE, stringsAsFactors = FALSE)
+
+
+
+
+#put pData into an adf
+adf<-AnnotatedDataFrame(data = pData)
+
+
+complete_lumibatch<-new("LumiBatch",
+                     assayData = assayData(lumibatch),
+                     phenoData = adf,
+                     detection = detection(lumibatch),
+                     controlData = controlData(lumibatch),
+                     featureData = featureData(lumibatch))
+```
+
+Plots of non-normalized data
+
+```{r nonnormalized data}
+
+
+density(complete_lumibatch)#number of probes for each sample that occur
+#at a certain log2 intensity
+
+dimensional_data <- plotMDS(complete_lumibatch)#make the plot, it invisibly returns a large object that has the actual dimensions data in matrices called x and y (one for each dimension)
+
+#make a data frame where
+d <- data.frame(Dim1 = dimensional_data$x, #Dim1 is a column containing the values from the x matrix
+               Dim2 = dimensional_data$y, #Dim2 is a column containing the values from the y matrix
+               sampleNames = names(dimensional_data$x))#sampleNames is a column that holds the column names from the x matrix, which happen to be the microarray wells.
+
+d <- as_data_frame(merge(d, pData(complete_lumibatch)), by = "sampleNames")
+
+#better plots
+
+ggplot(d, aes( x = Dim1, y = Dim2)) + 
+  geom_jitter(aes(color = Tissue))
+
+
+boxplot(complete_lumibatch)
+```
+
+Plots of normalized data. There is an interesting blip, maybe it is the paxgene samples?
+```{r background correction, results = 'hide'}
+
+#the data we got from the core has no background correction (I don't think it did anyway...) so I will do it here.
+
+
+B_complete_lumibatch<-lumiB(complete_lumibatch, method = "bgAdjust")
+
+
+# VST TRANSFORMATION 
+#"Stabilizing the expression variance based on
+#the bead level expression variance and mean relations"
+
+TB_complete_lumibatch <-lumiT (B_complete_lumibatch, method = 'vst')
+#can do this to look at a plot. 
+
+#plotVST(TB_complete_lumibatch)
+
+#robust spline normalization
+NTB_complete_lumibatch <-lumiN(TB_complete_lumibatch, method = "rsn")
+
+
+#doing the QC evaluation of the lumibatch object so that mean and stdev data will be in the QC slot of the lumibatch
+
+QNTB_complete_lumibatch <- lumiQ(NTB_complete_lumibatch)
+
+
+plotDensities(QNTB_complete_lumibatch, log = TRUE, legend = FALSE)
+
+
+
+```
+
+Apparently not the pax gene samples
+```{r blip finding}
+
+
+#subset the lumibatch for pax gene data only
+
+pax<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "PAXgene"]
+
+density(pax)
+```
+
+Some of the duodenal ones show up there...
+
+```{r duod}
+
+duod<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "Duodenal"]
+
+plotDensities(duod, log = TRUE, legend = FALSE)
+
+
+
+```
+
+Here is rectal and box plots of all
+
+
+```{r rect}
+
+rect<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "Rectal"]
+
+
+plotDensities(rect, log = TRUE, legend = FALSE)
+
+#box plot
+
+boxplot(QNTB_complete_lumibatch)
+
+
+
+duod_rect2<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "Rectal"|QNTB_complete_lumibatch$Tissue == "Duodenal" & QNTB_complete_lumibatch$Visit == "Visit2"]
+
+plotDensities(duod_rect2, log = TRUE, legend = FALSE) 
+
+```
+
+
+```{r finding blips cont}
+
+
+#make the exprs matrix into a data frame so it is easier to filter and plot
+
+x<-as.data.frame(exprs(QNTB_complete_lumibatch))
+
+y <- x[, 1:16>7]
+
+
+y$ProbeID <- rownames(y)
+
+rownames(y)<-NULL
+
+z<-melt(y, id.vars = "ProbeID",variable.name = "sampleNames", value.name = "Intensity")
+
+a<- merge(z, pData, by = "sampleNames")
+
+ggplot(a, aes( x = Intensity, color = Tissue))+
+  geom_density()+
+  scale_x_continuous(limits = c(6, 8))
+  
+
+#colored by sample and facetted by visit and tissue.
+#This shows that the increased # of probes at intensity~7.5 was in Visit 2 duodenal samples and Enrollment rectal samples
+
+ggplot(a, aes( x = Intensity, color = sampleNames))+
+  geom_density()+
+  guides(color = FALSE)+
+  scale_x_continuous(limits = c(6.5, 8))+
+  facet_grid(Tissue~Visit)
+
+
+
+#Filter a  for just the conditions that looked interesting above
+b<-a %>%
+  filter(Tissue == "Duodenal" | Tissue == "Rectal")%>%
+  filter(Intensity > 7.45 & Intensity < 7.7)%>%
+  mutate(Visit = ifelse(Tissue == "Duodenal","Visit2", 
+                        ifelse(Tissue == "Rectal", "Enrollment", Visit)))
+
+#which Ptids are in this filtered group? Looks like only 4/8 of them.
+unique(b$Ptid)
+unique(b$sampleNames)
+
+#are there a lot more probes at this intensity for one patient in particular? Looks like JC2300 is elevated at both.
+
+
+c<- b %>%
+  group_by(Ptid, Tissue, Visit) %>%
+  summarise(num_probes = n())
+
+ggplot(c, aes(x = Ptid, y = num_probes)) +
+  geom_point(aes(color = Tissue))+
+  facet_wrap(~Visit)
+
+
+#is it the same probes in the enrollment and visit2 that have this intensity level?
+
+
+
+
+
+```
+
+
+MDS of normalized data separates tissue types pretty well. Not suprising that paxgene samples are similar to PBMC.
+```{r normed MDS}
+
+norm_dimensional_data <- plotMDS(QNTB_complete_lumibatch)#make the plot, it invisibly returns a large object that has the actual dimensions data in matrices called x and y (one for each dimension)
+
+#make a data frame where
+normd <- data.frame(Dim1 = norm_dimensional_data$x, #Dim1 is a column containing the values from the x matrix
+               Dim2 = norm_dimensional_data$y, #Dim2 is a column containing the values from the y matrix
+               sampleNames = names(norm_dimensional_data$x))#SampleID is a column that holds the column names from the x matrix, which happen to be the microarray wells.
+
+normd <- as_data_frame(merge(normd, pData(QNTB_complete_lumibatch)), by = "sampleNames")
+
+
+
+ggplot(normd, aes(x=Dim1, y = Dim2))+
+  geom_point(aes(color = Tissue), size = 3)
+```
+
+## Non-specific filtering
+
+Limma suggests to keep probes that are expressed above background on at least n arrays where n is smallest number of replicates assigned to any of the treatment combinations.
+
+We have 8 donors x 2 visits x 4 Tissues so I will keep probes with detection levels above background in at least 2 samples??
+```{r ns filtering}
+#this is how the detection filtering works:
+#Mark the detection pvalues (there is one per probe per sample) with a 1 if <0.05 or a 0 if >0.05
+# using (detection(QNTB.complete.RAW.lumi)<0.05)
+
+#add up the 0's and 1's across each row (i.e. for all the samples)
+#using rowSums
+
+#now you have the number of detection p values <0.05 for each probe
+#for all the samples (max possible = total samples)
+
+#now tell me which probes have a rowSum of >=2 (probes will be marked as TRUE
+# or false if they do or do not have >=2 rowSum)
+
+detectedProbes <- rowSums(detection(QNTB_complete_lumibatch)<0.05)>= 2
+
+#now extract just those probes that are TRUE from the lumibatch
+
+expressedProbes <-QNTB_complete_lumibatch[detectedProbes,]
+
+save(expressedProbes, file = "R_output/expressed_probes.Rdata")
+```
+
+Number of probes in data set before filtering:
+
+```{r probes prefilter}
+
+dims(QNTB_complete_lumibatch)
+
+```
+
+
+Number of probes in data set after filtering:
+
+```{r probes postfilter}
+
+dims(expressedProbes)
+
+```
+
+```{r make design matrix}
+
+
+Ptid <- factor(pData$Ptid)
+
+Condition <- factor(paste(pData$Visit, pData$Tissue, sep = "_"))
+
+
+design <- model.matrix(~ 0 + Condition + Ptid)
+
+
+#When I have ~0 for the intercept, each coeff represents the avg of the samples at each level of Condition and Donor. If I had used ~1 instead, the intercept would represent the avg of the samples for the first factor and the next coeff would represent the increase in the average of the next factor OVER the first. I think.
+
+```
+
+```{r fit and contrasts}
+
+fit <- lmFit(expressedProbes, design = design)
+
+contrasts <-makeContrasts(
+  visit2VsEnrollRect = ConditionVisit2_Rectal - ConditionEnrollment_Rectal,
+  visit2VsEnrollDuod = ConditionVisit2_Duodenal - ConditionEnrollment_Duodenal,
+  visit2VsEnrollPBMC = ConditionVisit2_PBMC - ConditionEnrollment_PBMC,
+  visit2VsEnrollPAX = ConditionVisit2_PAXgene - ConditionEnrollment_PAXgene,
+  levels = design)
+
+fit2 <-contrasts.fit (contrasts, fit = fit)
+
+
+fit2 <-eBayes(fit2)
+```
+
+##Number of DE probes for each contrast
+
+```{r set pval limits}
+
+
+#method=separate is same as setting the limits for all coefs separately while "global" sets them all at once. I don't really know what this means
+
+results <- decideTests(fit2,method="separate", adjust.method="BH",
+                      p.value=0.05, lfc=0.5)
+
+#turn the results matrix into a data frame and make the
+#probeID a real column and remove the rownames
+
+resultsDF<-as.data.frame(results)
+resultsDF$ProbeID<-rownames(resultsDF)
+rownames(resultsDF)<-NULL
+
+#melt the df for easy summarizing
+
+resultsDFmelt<-melt(resultsDF, id.vars="ProbeID")
+
+summary<-resultsDFmelt %>%
+  group_by(variable)%>%
+ summarize(down=sum(value=="-1"),up=sum(value=="1"))
+
+pander(summary)
+```
+
+## Changes in the Duodenum pre and post-prEP
+
+```{r toptable}
+
+ttDuod <- topTable(fit2, coef = "visit2VsEnrollDuod", adjust.method = "BH", number=Inf, p.value=0.05, lfc=0.5 )
+
+pander(ttDuod %>%
+         select (TargetID, DEFINITION, adj.P.Val))
+```
