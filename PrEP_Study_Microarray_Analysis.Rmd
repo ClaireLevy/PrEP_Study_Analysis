@@ -1,7 +1,7 @@
 ---
 title: "PrEP Study Microarray Analysis"
 author: "Claire Levy"
-output: html_document
+output: github_document
 ---
 
 ##Experimental set up
@@ -29,7 +29,7 @@ library(stringr)
 library(reshape2)
 ```
 
-```{r read in raw data, cache = TRUE}
+```{r read in raw data, cache = TRUE, results = 'hide'}
 
 #note that the sampleNames are NOT syntactically valid, here (they have "-")
 lumibatch<-lumiR(fileName = "raw_data/2017.04.18.smhughesFinalReport.txt ",
@@ -58,33 +58,41 @@ complete_lumibatch<-new("LumiBatch",
                      featureData = featureData(lumibatch))
 ```
 
+
+
+
+
+
 Plots of non-normalized data
 
 ```{r nonnormalized data}
 
+#MDS
 
-density(complete_lumibatch)#number of probes for each sample that occur
-#at a certain log2 intensity
-
-dimensional_data <- plotMDS(complete_lumibatch)#make the plot, it invisibly returns a large object that has the actual dimensions data in matrices called x and y (one for each dimension)
-
-#make a data frame where
-d <- data.frame(Dim1 = dimensional_data$x, #Dim1 is a column containing the values from the x matrix
-               Dim2 = dimensional_data$y, #Dim2 is a column containing the values from the y matrix
-               sampleNames = names(dimensional_data$x))#sampleNames is a column that holds the column names from the x matrix, which happen to be the microarray wells.
-
-d <- as_data_frame(merge(d, pData(complete_lumibatch)), by = "sampleNames")
-
-#better plots
-
-ggplot(d, aes( x = Dim1, y = Dim2)) + 
-  geom_jitter(aes(color = Tissue))
+dim_data<- plotMDS(complete_lumibatch)
+  d<-data.frame(data.frame(Dim1 = dim_data$x, 
+               Dim2 = dim_data$y, 
+               sampleNames = names(dim_data$x)))
+  
+  d<-merge(d, pData, by = "sampleNames")
+  
+  ggplot(d, aes(x=Dim1, y = Dim2))+
+  geom_point(aes(color = Tissue), size = 3)
 
 
+
+
+
+
+#A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot. The default is c(5, 4, 4, 2) + 0.1.
+
+par(cex= 0.7, mar = c(10,10,10,10))
 boxplot(complete_lumibatch)
+
+#Ryan Basom looked at this box plot with me and we talked about how it shows that the paxgene samples almost always have low expression and the IQR is smaller. If I normalize all samples together, apparently non-random variation might cause problems. RB's recommendation was to normalize and analyze the tissues separately. 
 ```
 
-Plots of normalized data. There is an interesting blip, maybe it is the paxgene samples?
+
 ```{r background correction, results = 'hide'}
 
 #the data we got from the core has no background correction (I don't think it did anyway...) so I will do it here.
@@ -97,246 +105,195 @@ B_complete_lumibatch<-lumiB(complete_lumibatch, method = "bgAdjust")
 #"Stabilizing the expression variance based on
 #the bead level expression variance and mean relations"
 
-TB_complete_lumibatch <-lumiT (B_complete_lumibatch, method = 'vst')
+TB_complete_lumibatch <-lumiT(B_complete_lumibatch, method = 'vst')
 #can do this to look at a plot. 
 
 #plotVST(TB_complete_lumibatch)
-
-#robust spline normalization
-NTB_complete_lumibatch <-lumiN(TB_complete_lumibatch, method = "rsn")
-
-
-#doing the QC evaluation of the lumibatch object so that mean and stdev data will be in the QC slot of the lumibatch
-
-QNTB_complete_lumibatch <- lumiQ(NTB_complete_lumibatch)
-
-
-plotDensities(QNTB_complete_lumibatch, log = TRUE, legend = FALSE)
-
-
-
 ```
 
-Apparently not the pax gene samples
-```{r blip finding}
+```{r split up data into tissue types}
 
 
-#subset the lumibatch for pax gene data only
-
-pax<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "PAXgene"]
-
-density(pax)
-```
-
-Some of the duodenal ones show up there...
-
-```{r duod}
-
-duod<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "Duodenal"]
-
-plotDensities(duod, log = TRUE, legend = FALSE)
+duod_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="Duodenal"]
 
 
+rec_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="Rectal"]
 
-```
-
-Here is rectal and box plots of all
-
-
-```{r rect}
-
-rect<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "Rectal"]
+pb_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="PBMC"]
 
 
-plotDensities(rect, log = TRUE, legend = FALSE)
-
-#box plot
-
-boxplot(QNTB_complete_lumibatch)
-
-
-
-duod_rect2<-QNTB_complete_lumibatch[ , QNTB_complete_lumibatch$Tissue == "Rectal"|QNTB_complete_lumibatch$Tissue == "Duodenal" & QNTB_complete_lumibatch$Visit == "Visit2"]
-
-plotDensities(duod_rect2, log = TRUE, legend = FALSE) 
+px_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="PAXgene"]
 
 ```
 
 
-```{r finding blips cont}
+
+```{r robust spline normalization, results = 'hide'}
 
 
-#make the exprs matrix into a data frame so it is easier to filter and plot
+duod_norm_batch<- lumiN(duod_batch, method = "rsn")
 
-x<-as.data.frame(exprs(QNTB_complete_lumibatch))
+rec_norm_batch<-lumiN(rec_batch, method = "rsn")
 
-y <- x[, 1:16>7]
+pb_norm_batch<-lumiN(pb_batch, method = "rsn")
+
+px_norm_batch<-lumiN(px_batch, method = "rsn")
+
+```
+
+These normalized samples all look... normal.
 
 
-y$ProbeID <- rownames(y)
 
-rownames(y)<-NULL
+```{r MDS plot function}
 
-z<-melt(y, id.vars = "ProbeID",variable.name = "sampleNames", value.name = "Intensity")
+# a function to make nice MDS plots
 
-a<- merge(z, pData, by = "sampleNames")
+#plotMDS  invisibly returns a large object that has the actual dimensions data in matrices called x and y (one for each dimension)
 
-ggplot(a, aes( x = Intensity, color = Tissue))+
-  geom_density()+
-  scale_x_continuous(limits = c(6, 8))
+#Dim1 is a column containing the values from the x matrix
+#Dim2 is a column containing the values from the y matrix
+#sampleNames is a column that holds the column names from the x matrix, which happen to be the microarray wells.
+
+
+#add a plot title to this function!!!
+
+
+plot_MDS_by_Visit<-function(batch){
+  dim_data<- plotMDS(batch)
+  d<-data.frame(data.frame(Dim1 = dim_data$x, 
+               Dim2 = dim_data$y, 
+               sampleNames = names(dim_data$x)))
   
-
-#colored by sample and facetted by visit and tissue.
-#This shows that the increased # of probes at intensity~7.5 was in Visit 2 duodenal samples and Enrollment rectal samples
-
-ggplot(a, aes( x = Intensity, color = sampleNames))+
-  geom_density()+
-  guides(color = FALSE)+
-  scale_x_continuous(limits = c(6.5, 8))+
-  facet_grid(Tissue~Visit)
-
-
-
-#Filter a  for just the conditions that looked interesting above
-b<-a %>%
-  filter(Tissue == "Duodenal" | Tissue == "Rectal")%>%
-  filter(Intensity > 7.45 & Intensity < 7.7)%>%
-  mutate(Visit = ifelse(Tissue == "Duodenal","Visit2", 
-                        ifelse(Tissue == "Rectal", "Enrollment", Visit)))
-
-#which Ptids are in this filtered group? Looks like only 4/8 of them.
-unique(b$Ptid)
-unique(b$sampleNames)
-
-#are there a lot more probes at this intensity for one patient in particular? Looks like JC2300 is elevated at both.
-
-
-c<- b %>%
-  group_by(Ptid, Tissue, Visit) %>%
-  summarise(num_probes = n())
-
-ggplot(c, aes(x = Ptid, y = num_probes)) +
-  geom_point(aes(color = Tissue))+
-  facet_wrap(~Visit)
-
-
-#is it the same probes in the enrollment and visit2 that have this intensity level?
-
-
-
-
+  d<-merge(d, pData, by = "sampleNames")
+  
+  ggplot(d, aes(x=Dim1, y = Dim2))+
+  geom_point(aes(color = Visit), size = 3)
+  }
 
 ```
 
+```{r norm plots}
+#duod
+plotDensities(duod_norm_batch,legend = FALSE, main = "Normalized Duodenal Samples")
 
-MDS of normalized data separates tissue types pretty well. Not suprising that paxgene samples are similar to PBMC.
-```{r normed MDS}
+boxplot(duod_norm_batch,main = "Normalized Duodenal Samples")
 
-norm_dimensional_data <- plotMDS(QNTB_complete_lumibatch)#make the plot, it invisibly returns a large object that has the actual dimensions data in matrices called x and y (one for each dimension)
-
-#make a data frame where
-normd <- data.frame(Dim1 = norm_dimensional_data$x, #Dim1 is a column containing the values from the x matrix
-               Dim2 = norm_dimensional_data$y, #Dim2 is a column containing the values from the y matrix
-               sampleNames = names(norm_dimensional_data$x))#SampleID is a column that holds the column names from the x matrix, which happen to be the microarray wells.
-
-normd <- as_data_frame(merge(normd, pData(QNTB_complete_lumibatch)), by = "sampleNames")
+plot_MDS_by_Visit(duod_norm_batch)
 
 
+# rectal
+plotDensities(rec_norm_batch,legend = FALSE, main = "Normalized Rectal Samples")
 
-ggplot(normd, aes(x=Dim1, y = Dim2))+
-  geom_point(aes(color = Tissue), size = 3)
+boxplot(rec_norm_batch, main =" Normalized Rectal Samples" )
+
+plot_MDS_by_Visit(rec_norm_batch)
+
+#PBMC
+plotDensities(pb_norm_batch,legend = FALSE, main = "Normalized PBMC Samples")
+
+boxplot(pb_norm_batch, main ="Normalized PBMC Samples" )
+
+
+plot_MDS_by_Visit(pb_norm_batch)
+
+
+#PAXgene
+plotDensities(px_norm_batch,legend = FALSE, main = "Normalized PAXgene Samples")
+
+boxplot(px_norm_batch, main = "Normalized PAXgene Samples" )
+
+
+plot_MDS_by_Visit(px_norm_batch)
 ```
+
+
 
 ## Non-specific filtering
 
-Limma suggests to keep probes that are expressed above background on at least n arrays where n is smallest number of replicates assigned to any of the treatment combinations.
+I will filter out any probes that are not expressed above the 0.05 p-value cut-off in at least 6 samples.  I chose 6 because a probe may not be expressed at all in the 8 Enrollment samples (so 0/16 total), but may show up at Visit2 (8 possibilities). It would still be biologically interesting if a probe was expressed at Visit2 (and not at enrollment) even if it wasn't in all donors, so I'll require it to show up in at least 6 of them.
 
-We have 8 donors x 2 visits x 4 Tissues so I will keep probes with detection levels above background in at least 2 samples??
 ```{r ns filtering}
-#this is how the detection filtering works:
-#Mark the detection pvalues (there is one per probe per sample) with a 1 if <0.05 or a 0 if >0.05
-# using (detection(QNTB.complete.RAW.lumi)<0.05)
 
-#add up the 0's and 1's across each row (i.e. for all the samples)
-#using rowSums
+#count probes where det pval <0.05 in at least 7 samples
+#extract those probes from the batch
 
-#now you have the number of detection p values <0.05 for each probe
-#for all the samples (max possible = total samples)
+find_expressed <-function(batch){
+  x <-rowSums(detection(batch)<0.05)>= 7
+  batch[x,]
+}
 
-#now tell me which probes have a rowSum of >=2 (probes will be marked as TRUE
-# or false if they do or do not have >=2 rowSum)
 
-detectedProbes <- rowSums(detection(QNTB_complete_lumibatch)<0.05)>= 2
 
-#now extract just those probes that are TRUE from the lumibatch
+duod_expressed<-find_expressed(duod_norm_batch)
 
-expressedProbes <-QNTB_complete_lumibatch[detectedProbes,]
+rec_expressed<-find_expressed(rec_norm_batch)
 
-save(expressedProbes, file = "R_output/expressed_probes.Rdata")
+pb_expressed<-find_expressed(pb_norm_batch)
+
+px_expressed<-find_expressed(px_norm_batch)
 ```
 
-Number of probes in data set before filtering:
+Number of probes removed from the data sets after filtering for expression. All started with 47323 probes.
 
-```{r probes prefilter}
+```{r probes pre and post filter}
+#here are the probes that were removed by NS filtering for each tissue
+probes_removed<- data.frame(
+"Duod" = nrow(fData(duod_norm_batch))-nrow(fData(duod_expressed)),
+"Rectal" = nrow(fData(rec_norm_batch))-nrow(fData(rec_expressed)),
+"PBMC" =nrow(fData(pb_norm_batch))-nrow(fData(pb_expressed)),
+"PAXgene" = nrow(fData(px_norm_batch))-nrow(fData(px_expressed)))
 
-dims(QNTB_complete_lumibatch)
+
+pander(probes_removed)
+```
+
+
+```{r design and fit function}
+
+
+#When I have ~0 for the intercept, each coeff represents the avg of the samples at each level of Condition and Donor. If I  use ~1 instead, the intercept would represent the avg of the samples for the first factor and the next coeff would represent the increase in the average of the next factor OVER the first. See here:https://support.bioconductor.org/p/67395/ and here https://support.bioconductor.org/p/12145/
+
+
+
+fit_model<-function(expressedProbes){
+  
+Ptid <- pData(expressedProbes)$Ptid #get pData just for that tissue
+
+Visit <-  pData(expressedProbes)$Visit
+
+design <- model.matrix(~0+ Visit + Ptid)
+
+fit<-lmFit(expressedProbes, design = design)
+
+contrasts<-makeContrasts(
+  Visit2vsEnrollment = VisitVisit2-VisitEnrollment, levels = design)
+
+fit2 <- contrasts.fit(contrasts, fit = fit)
+
+fit2<-eBayes(fit2)
+}
+
+#fit model to each tissue
+duod_fit2<-fit_model(duod_expressed)
+rec_fit2<-fit_model(rec_expressed)
+pb_fit2<-fit_model(pb_expressed)
+px_fit2<-fit_model(px_expressed)
 
 ```
 
 
-Number of probes in data set after filtering:
+```{r results summary function}
 
-```{r probes postfilter}
-
-dims(expressedProbes)
-
-```
-
-```{r make design matrix}
+#results summary function
 
 
-Ptid <- factor(pData$Ptid)
-
-Condition <- factor(paste(pData$Visit, pData$Tissue, sep = "_"))
+#method = separate is same as setting the limits for all coefs separately while "global" sets them all at once. I don't think this matters for me since I only have one contrast. I get the same answer if I used global or separate
 
 
-design <- model.matrix(~ 0 + Condition + Ptid)
-
-
-#When I have ~0 for the intercept, each coeff represents the avg of the samples at each level of Condition and Donor. If I had used ~1 instead, the intercept would represent the avg of the samples for the first factor and the next coeff would represent the increase in the average of the next factor OVER the first. I think.
-
-```
-
-```{r fit and contrasts}
-
-fit <- lmFit(expressedProbes, design = design)
-
-contrasts <-makeContrasts(
-  visit2VsEnrollRect = ConditionVisit2_Rectal - ConditionEnrollment_Rectal,
-  visit2VsEnrollDuod = ConditionVisit2_Duodenal - ConditionEnrollment_Duodenal,
-  visit2VsEnrollPBMC = ConditionVisit2_PBMC - ConditionEnrollment_PBMC,
-  visit2VsEnrollPAX = ConditionVisit2_PAXgene - ConditionEnrollment_PAXgene,
-  levels = design)
-
-fit2 <-contrasts.fit (contrasts, fit = fit)
-
-
-fit2 <-eBayes(fit2)
-```
-
-##Number of DE probes for each contrast
-
-```{r set pval limits}
-
-
-#method=separate is same as setting the limits for all coefs separately while "global" sets them all at once. I don't really know what this means
-
-results <- decideTests(fit2,method="separate", adjust.method="BH",
+fit_results<- function(fit2){
+  results <- decideTests(fit2,method="global", adjust.method="BH",
                       p.value=0.05, lfc=0.5)
-
-#turn the results matrix into a data frame and make the
-#probeID a real column and remove the rownames
-
 resultsDF<-as.data.frame(results)
 resultsDF$ProbeID<-rownames(resultsDF)
 rownames(resultsDF)<-NULL
@@ -350,14 +307,32 @@ summary<-resultsDFmelt %>%
  summarize(down=sum(value=="-1"),up=sum(value=="1"))
 
 pander(summary)
+}
+  
+#summarise each tissue
+
+duod_summary<-fit_results(duod_fit2)
+rec_summary<-fit_results(rec_fit2)
+pb_summary<-fit_results(pb_fit2)
+px_summary<-fit_results(px_fit2)
+
+ 
 ```
 
-## Changes in the Duodenum pre and post-prEP
+##Number of DE probes for each contrast
+
+
+The Duodenal samples were the only ones with any differentially expressed probes. There were 76 downregulated probes and 15 upregulated probes.
+
+
+## Changes in the Duodenum pre vs post-prEP
 
 ```{r toptable}
 
-ttDuod <- topTable(fit2, coef = "visit2VsEnrollDuod", adjust.method = "BH", number=Inf, p.value=0.05, lfc=0.5 )
+ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number=Inf, p.value=0.05, lfc=0.5 )
 
 pander(ttDuod %>%
-         select (TargetID, DEFINITION, adj.P.Val))
+         mutate(Direction = ifelse(logFC<0, "DOWN", "UP"))%>%
+         select (TargetID, Direction, DEFINITION, adj.P.Val))
+        
 ```
