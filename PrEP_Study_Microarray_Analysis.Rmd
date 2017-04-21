@@ -27,6 +27,7 @@ library(limma)
 library(pander)
 library(stringr)
 library(reshape2)
+
 ```
 
 ```{r read in raw data, cache = TRUE, results = 'hide'}
@@ -317,17 +318,199 @@ px_summary<-fit_results(px_fit2)
 ##Number of DE probes for each contrast
 
 
-The Duodenal samples were the only ones with any differentially expressed probes. There were 76 downregulated probes and 15 upregulated probes.
+The Duodenal samples were the only ones with any differentially expressed probes. There were 70 downregulated probes and 11 upregulated probes.
 
 
-## Changes in the Duodenum pre vs post-prEP
+## Changes in the Duodenum pre vs post-prEP: logFC cutoff = 0.5, p-value cut-off = 0.05
 
 ```{r toptable}
 
-ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number=Inf, p.value=0.05, lfc=0.5 )
+ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number=Inf, p.value = 0.05, lfc = 0.5 )
 
 pander(ttDuod %>%
          mutate(Direction = ifelse(logFC<0, "DOWN", "UP"))%>%
          select (TargetID, Direction, DEFINITION, adj.P.Val))
         
+```
+
+## CAMERA testing
+
+From the CAMERA documentation: 
+
+"camera performs a competitive test in the sense defined by Goeman and Buhlmann (2007). It tests whether the genes in the set are highly ranked in terms of differential expression relative to genes not in the set."
+
+### Hallmark gene sets: top 10 results
+
+```{r camera test setup}
+
+#I'm going to do a CAMERA test using the MSigDB hallmark sets on all of my contrasts
+#downloaded Rdata file 22Apr16 from http://bioinf.wehi.edu.au/software/MSigDB/
+
+load("geneSets_for_CAMERA/human_Hallmark_v5.rdata")
+
+#Eset to use
+
+eSet<- exprs(duod_expressed)
+
+#IDs from eSet: entrezIDs from the data I'm analyzing (not the pre-determined gene set). 
+
+identifiers <- as.character(fData(duod_expressed)[,"ENTREZ_GENE_ID"])
+
+```
+
+```{r camera function}
+
+#a function to get the appropriate design and contrast matrices for expressed probes from each tissue, then run camera on them.
+
+
+camera_function<-function(expressedProbes, geneSet){
+  
+Ptid <- pData(expressedProbes)$Ptid #get pData just for that tissue
+
+Visit <-  pData(expressedProbes)$Visit
+
+design <- model.matrix(~0+ Visit + Ptid)
+
+contrast <-makeContrasts(
+  Visit2vsEnrollment = VisitVisit2-VisitEnrollment, levels = design)
+
+#IDs from eSet that I'll use for camera: entrezIDs *from the data I'm analyzing* (not the pre-determined gene set). 
+
+identifiers <- as.character(fData(expressedProbes)[,"ENTREZ_GENE_ID"])
+
+#make the index of the geneSet using identifiers from my eSet
+index <- ids2indices(gene.sets = geneSet, identifiers = identifiers)
+
+camera(y = exprs(expressedProbes), index = index, design = design, contrast = contrast) 
+
+}
+
+```
+
+
+####Duodenal sample results
+```{r hallmark duod}
+
+#I want to use the "Hs.H" hallmark genesets
+pander(camera_function(duod_expressed, Hs.H) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+
+####Rectal sample results
+```{r hallmark rec}
+
+#I want to use the "Hs.H" hallmark genesets
+pander(camera_function(rec_expressed, Hs.H) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+####PBMC sample results
+```{r hallmark pb}
+
+#I want to use the "Hs.H" hallmark genesets
+pander(camera_function(pb_expressed, Hs.H) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+####PAXgene sample results
+```{r hallmark px}
+
+#I want to use the "Hs.H" hallmark genesets
+pander(camera_function(px_expressed, Hs.H) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+
+
+
+### GO biological process gene sets: top 10 results
+
+Sean wrote some code (https://github.com/seaaan/Bioinformatics/tree/master/GOTermMappingsForCamera) to extract just the Biological Process gene sets out of all the GO gene sets. 
+
+
+####Duodenal sample Results
+```{r }
+
+load("geneSets_for_CAMERA/Hs.c5.BP.rdata")
+
+#I want to use the "Hs.c5.BP"  genesets
+pander(camera_function(duod_expressed, Hs.c5.BP) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+
+####Rectal sample Results
+```{r }
+
+#I want to use the "Hs.c5.BP"  genesets
+pander(camera_function(rec_expressed, Hs.c5.BP) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+####PBMC sample results
+```{r }
+
+#I want to use the "Hs.c5.BP"  genesets
+pander(camera_function(pb_expressed, Hs.c5.BP) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+####PAXgene sample results
+```{r}
+
+#I want to use the "Hs.c5.BP" genesets
+pander(camera_function(px_expressed, Hs.c5.BP) %>%
+  select(-FDR)%>%
+  head(n = 10))
+```
+
+### MTN-007 gene sets: top 10 results
+
+Here I am comparing the probes in this experiment to significantly differentially expressed probes from MTN-007 9cm biopsies at 7 days.
+
+
+
+####Duodenal sample results
+```{r }
+
+load("geneSets_for_CAMERA/mtn_007_sets.Rda")
+
+
+
+#I want to use the "mtn_007_sets"  genesets
+pander(camera_function(duod_expressed, mtn_007_sets) %>%
+  select(-FDR))
+```
+
+
+####Rectal sample results
+```{r}
+
+#I want to use the "mtn_007_sets"  genesets
+pander(camera_function(rec_expressed, mtn_007_sets) %>%
+  select(-FDR))
+```
+
+####PBMC sample results
+```{r }
+
+#I want to use the "mtn_007_sets"  genesets
+pander(camera_function(pb_expressed, mtn_007_sets) %>%
+  select(-FDR))
+```
+
+####PAXgene sample results
+```{r }
+
+#I want to use the "mtn_007_sets"  genesets
+pander(camera_function(px_expressed, mtn_007_sets) %>%
+  select(-FDR))
 ```
