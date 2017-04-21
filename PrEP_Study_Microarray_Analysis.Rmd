@@ -100,44 +100,40 @@ boxplot(complete_lumibatch)
 
 B_complete_lumibatch<-lumiB(complete_lumibatch, method = "bgAdjust")
 
-
-# VST TRANSFORMATION 
-#"Stabilizing the expression variance based on
-#the bead level expression variance and mean relations"
-
-TB_complete_lumibatch <-lumiT(B_complete_lumibatch, method = 'vst')
-#can do this to look at a plot. 
-
-#plotVST(TB_complete_lumibatch)
 ```
 
 ```{r split up data into tissue types}
 
 
-duod_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="Duodenal"]
+duod_batch<-complete_lumibatch[, complete_lumibatch$Tissue =="Duodenal"]
+
+rec_batch<-complete_lumibatch[, complete_lumibatch$Tissue =="Rectal"]
+
+pb_batch<-complete_lumibatch[, complete_lumibatch$Tissue =="PBMC"]
 
 
-rec_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="Rectal"]
-
-pb_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="PBMC"]
-
-
-px_batch<-TB_complete_lumibatch[, TB_complete_lumibatch$Tissue =="PAXgene"]
+px_batch<-complete_lumibatch[, complete_lumibatch$Tissue =="PAXgene"]
 
 ```
 
 
 
-```{r robust spline normalization, results = 'hide'}
+```{r vst transform androbust spline normalization, results = 'hide'}
 
 
-duod_norm_batch<- lumiN(duod_batch, method = "rsn")
+#decided to do the transformation separately for each tissue since the function uses the variance to transform. I get a slightly different number of up and down DE probes than when I transformed all together (together = 76 up, 15 down, separate = 70 up and 11 down)
 
-rec_norm_batch<-lumiN(rec_batch, method = "rsn")
+duod_trans_batch<- lumiT(duod_batch)
+duod_norm_batch<-lumiN(duod_trans_batch, method = "rsn")
 
-pb_norm_batch<-lumiN(pb_batch, method = "rsn")
+rec_trans_batch<- lumiT(rec_batch)
+rec_norm_batch<-lumiN(rec_trans_batch, method = "rsn")
 
-px_norm_batch<-lumiN(px_batch, method = "rsn")
+pb_trans_batch<- lumiT(pb_batch)
+pb_norm_batch<-lumiN(pb_trans_batch, method = "rsn")
+
+px_trans_batch<- lumiT(px_batch)
+px_norm_batch<-lumiN(px_trans_batch, method = "rsn")
 
 ```
 
@@ -193,7 +189,6 @@ plot_MDS_by_Visit(rec_norm_batch)
 plotDensities(pb_norm_batch,legend = FALSE, main = "Normalized PBMC Samples")
 
 boxplot(pb_norm_batch, main ="Normalized PBMC Samples" )
-
 
 plot_MDS_by_Visit(pb_norm_batch)
 
@@ -271,7 +266,7 @@ contrasts<-makeContrasts(
 
 fit2 <- contrasts.fit(contrasts, fit = fit)
 
-fit2<-eBayes(fit2)
+eBayes(fit2)
 }
 
 #fit model to each tissue
