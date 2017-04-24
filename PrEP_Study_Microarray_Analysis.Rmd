@@ -88,7 +88,7 @@ dim_data<- plotMDS(complete_lumibatch)
 #A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot. The default is c(5, 4, 4, 2) + 0.1.
 
 par(cex= 0.7, mar = c(10,10,10,10))
-boxplot(complete_lumibatch)
+boxplot(complete_lumibatch, col = c("#1b9e77","#80cdc1","#984ea3","#e7298a"))
 
 #Ryan Basom looked at this box plot with me and we talked about how it shows that the paxgene samples almost always have low expression and the IQR is smaller. If I normalize all samples together, apparently non-random variation might cause problems. RB's recommendation was to normalize and analyze the tissues separately. 
 ```
