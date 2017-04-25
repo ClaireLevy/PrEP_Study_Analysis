@@ -5,7 +5,7 @@ Claire Levy
 Experimental set up
 -------------------
 
-We isolated RNA from four different sample types from 8 donors pre- and post- initiation of prEP. The pre-initation was called "Enrollment" and the post-initiation visit was called "Visit2"
+We isolated RNA from four different sample types from 8 donors pre- and post- initiation of PreP. The pre-initation was called "Enrollment" and the post-initiation visit was called "Visit2"
 
 Sample Types
 
@@ -14,11 +14,13 @@ Sample Types
 -   PAXgene (whole blood collected into RNA preservative)
 -   PBMC (PBMC isolated from whole blood)
 
+NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling perscription on time.
+
 Plots of non-normalized data
 
 ![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/nonnormalized%20data-1.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/nonnormalized%20data-2.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/nonnormalized%20data-3.png)
 
-These normalized samples all look... normal.
+These normalized samples all look good.
 
 ![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-1.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-2.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-3.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-4.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-5.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-6.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-7.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-8.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-9.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-10.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-11.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-12.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-13.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-14.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-15.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/norm%20plots-16.png)
 
@@ -578,324 +580,324 @@ From the CAMERA documentation:
 
 #### Duodenal sample results
 
-<table style="width:99%;">
+<table style="width:81%;">
 <colgroup>
-<col width="56%" />
-<col width="12%" />
+<col width="36%" />
 <col width="16%" />
-<col width="12%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Set</th>
 <th align="center">Direction</th>
-<th align="center">PValue</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_INTERFERON_ALPHA_RESPONSE</strong></td>
+<td align="center">interferon alpha response</td>
+<td align="center">Up</td>
+<td align="center">1.432e-10</td>
 <td align="center">118</td>
-<td align="center">Up</td>
-<td align="center">2.863e-12</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_E2F_TARGETS</strong></td>
+<td align="center">e2f targets</td>
+<td align="center">Up</td>
+<td align="center">1.495e-09</td>
 <td align="center">269</td>
-<td align="center">Up</td>
-<td align="center">5.98e-11</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_G2M_CHECKPOINT</strong></td>
+<td align="center">g2m checkpoint</td>
+<td align="center">Up</td>
+<td align="center">2.482e-07</td>
 <td align="center">251</td>
-<td align="center">Up</td>
-<td align="center">1.489e-08</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_BILE_ACID_METABOLISM</strong></td>
+<td align="center">bile acid metabolism</td>
+<td align="center">Down</td>
+<td align="center">0.0003259</td>
 <td align="center">125</td>
-<td align="center">Down</td>
-<td align="center">2.607e-05</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_MYC_TARGETS_V1</strong></td>
+<td align="center">myc targets v1</td>
+<td align="center">Up</td>
+<td align="center">0.0007642</td>
 <td align="center">287</td>
-<td align="center">Up</td>
-<td align="center">7.642e-05</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_MYC_TARGETS_V2</strong></td>
+<td align="center">myc targets v2</td>
+<td align="center">Up</td>
+<td align="center">0.002901</td>
 <td align="center">79</td>
-<td align="center">Up</td>
-<td align="center">0.0003481</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_INTERFERON_GAMMA_RESPONSE</strong></td>
+<td align="center">interferon gamma response</td>
+<td align="center">Up</td>
+<td align="center">0.003457</td>
 <td align="center">241</td>
-<td align="center">Up</td>
-<td align="center">0.0004839</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_XENOBIOTIC_METABOLISM</strong></td>
-<td align="center">219</td>
+<td align="center">xenobiotic metabolism</td>
 <td align="center">Down</td>
-<td align="center">0.0009727</td>
+<td align="center">0.006079</td>
+<td align="center">219</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_UNFOLDED_PROTEIN_RESPONSE</strong></td>
-<td align="center">143</td>
+<td align="center">unfolded protein response</td>
 <td align="center">Up</td>
-<td align="center">0.001163</td>
+<td align="center">0.006459</td>
+<td align="center">143</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_HYPOXIA</strong></td>
-<td align="center">235</td>
+<td align="center">hypoxia</td>
 <td align="center">Down</td>
-<td align="center">0.004346</td>
+<td align="center">0.02173</td>
+<td align="center">235</td>
 </tr>
 </tbody>
 </table>
 
 #### Rectal sample results
 
-<table style="width:99%;">
+<table style="width:81%;">
 <colgroup>
-<col width="56%" />
-<col width="12%" />
+<col width="36%" />
 <col width="16%" />
-<col width="12%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Set</th>
 <th align="center">Direction</th>
-<th align="center">PValue</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_MYC_TARGETS_V2</strong></td>
+<td align="center">myc targets v2</td>
+<td align="center">Up</td>
+<td align="center">1.887e-07</td>
 <td align="center">79</td>
-<td align="center">Up</td>
-<td align="center">3.773e-09</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_OXIDATIVE_PHOSPHORYLATION</strong></td>
+<td align="center">oxidative phosphorylation</td>
+<td align="center">Up</td>
+<td align="center">8.293e-05</td>
 <td align="center">266</td>
-<td align="center">Up</td>
-<td align="center">3.317e-06</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_ALLOGRAFT_REJECTION</strong></td>
-<td align="center">232</td>
+<td align="center">allograft rejection</td>
 <td align="center">Down</td>
-<td align="center">8.701e-05</td>
+<td align="center">0.00145</td>
+<td align="center">232</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_CHOLESTEROL_HOMEOSTASIS</strong></td>
+<td align="center">cholesterol homeostasis</td>
+<td align="center">Up</td>
+<td align="center">0.002958</td>
 <td align="center">92</td>
-<td align="center">Up</td>
-<td align="center">0.0002366</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_MYC_TARGETS_V1</strong></td>
+<td align="center">myc targets v1</td>
+<td align="center">Up</td>
+<td align="center">0.004697</td>
 <td align="center">288</td>
-<td align="center">Up</td>
-<td align="center">0.0004697</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_ESTROGEN_RESPONSE_LATE</strong></td>
+<td align="center">estrogen response late</td>
+<td align="center">Up</td>
+<td align="center">0.0103</td>
 <td align="center">234</td>
-<td align="center">Up</td>
-<td align="center">0.001236</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_UV_RESPONSE_UP</strong></td>
+<td align="center">uv response up</td>
+<td align="center">Up</td>
+<td align="center">0.01245</td>
 <td align="center">175</td>
-<td align="center">Up</td>
-<td align="center">0.001877</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_PANCREAS_BETA_CELLS</strong></td>
-<td align="center">29</td>
+<td align="center">pancreas beta cells</td>
 <td align="center">Up</td>
-<td align="center">0.001992</td>
+<td align="center">0.01245</td>
+<td align="center">29</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_E2F_TARGETS</strong></td>
-<td align="center">262</td>
+<td align="center">e2f targets</td>
 <td align="center">Up</td>
-<td align="center">0.005781</td>
+<td align="center">0.02967</td>
+<td align="center">262</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_UNFOLDED_PROTEIN_RESPONSE</strong></td>
-<td align="center">144</td>
+<td align="center">unfolded protein response</td>
 <td align="center">Up</td>
-<td align="center">0.006305</td>
+<td align="center">0.02967</td>
+<td align="center">144</td>
 </tr>
 </tbody>
 </table>
 
 #### PBMC sample results
 
-<table style="width:99%;">
+<table style="width:81%;">
 <colgroup>
-<col width="56%" />
-<col width="12%" />
+<col width="36%" />
 <col width="16%" />
-<col width="12%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Set</th>
 <th align="center">Direction</th>
-<th align="center">PValue</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_TNFA_SIGNALING_VIA_NFKB</strong></td>
+<td align="center">tnfa signaling via nfkb</td>
+<td align="center">Down</td>
+<td align="center">8.921e-09</td>
 <td align="center">218</td>
-<td align="center">Down</td>
-<td align="center">1.784e-10</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_INTERFERON_GAMMA_RESPONSE</strong></td>
+<td align="center">interferon gamma response</td>
+<td align="center">Down</td>
+<td align="center">0.006626</td>
 <td align="center">250</td>
-<td align="center">Down</td>
-<td align="center">0.000265</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_APOPTOSIS</strong></td>
+<td align="center">apoptosis</td>
+<td align="center">Down</td>
+<td align="center">0.0113</td>
 <td align="center">204</td>
-<td align="center">Down</td>
-<td align="center">0.0006783</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_COMPLEMENT</strong></td>
+<td align="center">complement</td>
+<td align="center">Down</td>
+<td align="center">0.0136</td>
 <td align="center">211</td>
-<td align="center">Down</td>
-<td align="center">0.001088</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_MTORC1_SIGNALING</strong></td>
+<td align="center">mtorc1 signaling</td>
+<td align="center">Down</td>
+<td align="center">0.02192</td>
 <td align="center">260</td>
-<td align="center">Down</td>
-<td align="center">0.002192</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_HYPOXIA</strong></td>
+<td align="center">hypoxia</td>
+<td align="center">Down</td>
+<td align="center">0.02603</td>
 <td align="center">201</td>
-<td align="center">Down</td>
-<td align="center">0.003124</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_ESTROGEN_RESPONSE_LATE</strong></td>
+<td align="center">estrogen response late</td>
+<td align="center">Down</td>
+<td align="center">0.02715</td>
 <td align="center">168</td>
-<td align="center">Down</td>
-<td align="center">0.003801</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_MYC_TARGETS_V2</strong></td>
-<td align="center">76</td>
+<td align="center">myc targets v2</td>
 <td align="center">Up</td>
-<td align="center">0.005348</td>
+<td align="center">0.03343</td>
+<td align="center">76</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_INFLAMMATORY_RESPONSE</strong></td>
-<td align="center">198</td>
+<td align="center">inflammatory response</td>
 <td align="center">Down</td>
-<td align="center">0.00723</td>
+<td align="center">0.04017</td>
+<td align="center">198</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_CHOLESTEROL_HOMEOSTASIS</strong></td>
-<td align="center">78</td>
+<td align="center">cholesterol homeostasis</td>
 <td align="center">Down</td>
-<td align="center">0.01452</td>
+<td align="center">0.0726</td>
+<td align="center">78</td>
 </tr>
 </tbody>
 </table>
 
 #### PAXgene sample results
 
-<table style="width:99%;">
+<table style="width:81%;">
 <colgroup>
-<col width="56%" />
-<col width="12%" />
+<col width="36%" />
 <col width="16%" />
-<col width="12%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Set</th>
 <th align="center">Direction</th>
-<th align="center">PValue</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_INTERFERON_ALPHA_RESPONSE</strong></td>
+<td align="center">interferon alpha response</td>
+<td align="center">Down</td>
+<td align="center">0.0002159</td>
 <td align="center">118</td>
-<td align="center">Down</td>
-<td align="center">4.318e-06</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_INTERFERON_GAMMA_RESPONSE</strong></td>
+<td align="center">interferon gamma response</td>
+<td align="center">Down</td>
+<td align="center">0.01146</td>
 <td align="center">237</td>
-<td align="center">Down</td>
-<td align="center">0.0004584</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_TGF_BETA_SIGNALING</strong></td>
+<td align="center">tgf beta signaling</td>
+<td align="center">Down</td>
+<td align="center">0.2055</td>
 <td align="center">53</td>
-<td align="center">Down</td>
-<td align="center">0.01598</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_MYC_TARGETS_V2</strong></td>
+<td align="center">myc targets v2</td>
+<td align="center">Up</td>
+<td align="center">0.2055</td>
 <td align="center">73</td>
-<td align="center">Up</td>
-<td align="center">0.01644</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_MITOTIC_SPINDLE</strong></td>
+<td align="center">mitotic spindle</td>
+<td align="center">Up</td>
+<td align="center">0.4815</td>
 <td align="center">179</td>
-<td align="center">Up</td>
-<td align="center">0.04898</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_APICAL_SURFACE</strong></td>
+<td align="center">apical surface</td>
+<td align="center">Up</td>
+<td align="center">0.4815</td>
 <td align="center">35</td>
-<td align="center">Up</td>
-<td align="center">0.05778</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_HEDGEHOG_SIGNALING</strong></td>
+<td align="center">hedgehog signaling</td>
+<td align="center">Up</td>
+<td align="center">0.5361</td>
 <td align="center">21</td>
-<td align="center">Up</td>
-<td align="center">0.09036</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_BILE_ACID_METABOLISM</strong></td>
-<td align="center">85</td>
+<td align="center">bile acid metabolism</td>
 <td align="center">Up</td>
-<td align="center">0.09301</td>
+<td align="center">0.5361</td>
+<td align="center">85</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>HALLMARK_DNA_REPAIR</strong></td>
-<td align="center">175</td>
+<td align="center">dna repair</td>
 <td align="center">Up</td>
-<td align="center">0.09649</td>
+<td align="center">0.5361</td>
+<td align="center">175</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>HALLMARK_APICAL_JUNCTION</strong></td>
-<td align="center">155</td>
+<td align="center">apical junction</td>
 <td align="center">Up</td>
-<td align="center">0.1105</td>
+<td align="center">0.5525</td>
+<td align="center">155</td>
 </tr>
 </tbody>
 </table>
@@ -906,680 +908,405 @@ Sean wrote some code (<https://github.com/seaaan/Bioinformatics/tree/master/GOTe
 
 #### Duodenal sample Results
 
-<table>
+<table style="width:88%;">
 <colgroup>
-<col width="59%" />
-<col width="12%" />
+<col width="43%" />
 <col width="16%" />
-<col width="12%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Set</th>
 <th align="center">Direction</th>
-<th align="center">PValue</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>GO_FLAVONOID_METABOLIC_PROCESS</strong></td>
+<td align="center">go flavonoid metabolic process</td>
+<td align="center">Down</td>
+<td align="center">6.613e-07</td>
 <td align="center">30</td>
-<td align="center">Down</td>
-<td align="center">1.426e-10</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_NEUTRAL_LIPID_BIOSYNTHETIC_PROCESS</strong></td>
-<td align="center">34</td>
+<td align="center">go neutral lipid biosynthetic process</td>
 <td align="center">Down</td>
-<td align="center">1.252e-09</td>
+<td align="center">1.934e-06</td>
+<td align="center">34</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_ACYLGLYCEROL_BIOSYNTHETIC_PROCESS</strong></td>
-<td align="center">34</td>
+<td align="center">go acylglycerol biosynthetic process</td>
 <td align="center">Down</td>
-<td align="center">1.252e-09</td>
+<td align="center">1.934e-06</td>
+<td align="center">34</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_DNA_REPLICATION</strong></td>
+<td align="center">go dna replication</td>
+<td align="center">Up</td>
+<td align="center">3.922e-05</td>
 <td align="center">237</td>
-<td align="center">Up</td>
-<td align="center">3.555e-08</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_GLUCURONATE_METABOLIC_PROCESS</strong></td>
-<td align="center">26</td>
+<td align="center">go glucuronate metabolic process</td>
 <td align="center">Down</td>
-<td align="center">5.542e-08</td>
+<td align="center">3.922e-05</td>
+<td align="center">26</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_URONIC_ACID_METABOLIC_PROCESS</strong></td>
-<td align="center">26</td>
+<td align="center">go uronic acid metabolic process</td>
 <td align="center">Down</td>
-<td align="center">5.542e-08</td>
+<td align="center">3.922e-05</td>
+<td align="center">26</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_RESPONSE_TO_TYPE_I_INTERFERON</strong></td>
+<td align="center">go response to type i interferon</td>
+<td align="center">Up</td>
+<td align="center">3.922e-05</td>
 <td align="center">78</td>
-<td align="center">Up</td>
-<td align="center">5.922e-08</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_RESPONSE_TO_INTERFERON_ALPHA</strong></td>
-<td align="center">28</td>
+<td align="center">go response to interferon alpha</td>
 <td align="center">Up</td>
-<td align="center">1.07e-07</td>
+<td align="center">6.198e-05</td>
+<td align="center">28</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_DNA_REPLICATION_INITIATION</strong></td>
-<td align="center">29</td>
+<td align="center">go dna replication initiation</td>
 <td align="center">Up</td>
-<td align="center">1.531e-07</td>
+<td align="center">7.884e-05</td>
+<td align="center">29</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_RESPONSE_TO_XENOBIOTIC_STIMULUS</strong></td>
-<td align="center">102</td>
+<td align="center">go response to xenobiotic stimulus</td>
 <td align="center">Down</td>
-<td align="center">2.128e-07</td>
+<td align="center">9.868e-05</td>
+<td align="center">102</td>
 </tr>
 </tbody>
 </table>
 
 #### Rectal sample Results
 
-<table>
-<caption>Table continues below</caption>
+<table style="width:85%;">
 <colgroup>
-<col width="93%" />
-<col width="6%" />
+<col width="43%" />
+<col width="16%" />
+<col width="12%" />
+<col width="12%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
+<th align="center">Gene_Set</th>
+<th align="center">Direction</th>
+<th align="center">FDR</th>
 <th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>GO_HEMIDESMOSOME_ASSEMBLY</strong></td>
+<td align="center">go hemidesmosome assembly</td>
+<td align="center">Up</td>
+<td align="center">0.002715</td>
 <td align="center">16</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_OXIDATIVE_PHOSPHORYLATION</strong></td>
+<td align="center">go oxidative phosphorylation</td>
+<td align="center">Up</td>
+<td align="center">0.03887</td>
 <td align="center">89</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_IRE1_MEDIATED_UNFOLDED_PROTEIN_RESPONSE</strong></td>
+<td align="center">go ire1 mediated unfolded protein response</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">77</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_ELECTRON_TRANSPORT_CHAIN</strong></td>
+<td align="center">go electron transport chain</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">102</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_CELL_PROJECTION_SIZE</strong></td>
+<td align="center">go regulation of cell projection size</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">13</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_CELL_PERIPHERY</strong></td>
+<td align="center">go positive regulation of protein localization to cell periphery</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">52</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_PLASMA_MEMBRANE</strong></td>
+<td align="center">go positive regulation of protein localization to plasma membrane</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">52</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPIRATION</strong></td>
+<td align="center">go cellular respiration</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">156</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_ENERGY_HOMEOSTASIS</strong></td>
+<td align="center">go energy homeostasis</td>
+<td align="center">Down</td>
+<td align="center">0.04367</td>
 <td align="center">15</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_ENDOPLASMIC_RETICULUM_STRESS_INDUCED_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY</strong></td>
+<td align="center">go negative regulation of endoplasmic reticulum stress induced intrinsic apoptotic signaling pathway</td>
+<td align="center">Up</td>
+<td align="center">0.04367</td>
 <td align="center">22</td>
 </tr>
 </tbody>
 </table>
 
-<table>
-<caption>Table continues below</caption>
-<colgroup>
-<col width="90%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Direction</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>GO_HEMIDESMOSOME_ASSEMBLY</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_OXIDATIVE_PHOSPHORYLATION</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_IRE1_MEDIATED_UNFOLDED_PROTEIN_RESPONSE</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_ELECTRON_TRANSPORT_CHAIN</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_CELL_PROJECTION_SIZE</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_CELL_PERIPHERY</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_PLASMA_MEMBRANE</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPIRATION</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_ENERGY_HOMEOSTASIS</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_ENDOPLASMIC_RETICULUM_STRESS_INDUCED_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY</strong></td>
-<td align="center">Up</td>
-</tr>
-</tbody>
-</table>
-
-<table>
-<colgroup>
-<col width="92%" />
-<col width="7%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">PValue</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>GO_HEMIDESMOSOME_ASSEMBLY</strong></td>
-<td align="center">5.857e-07</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_OXIDATIVE_PHOSPHORYLATION</strong></td>
-<td align="center">1.677e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_IRE1_MEDIATED_UNFOLDED_PROTEIN_RESPONSE</strong></td>
-<td align="center">3.829e-05</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_ELECTRON_TRANSPORT_CHAIN</strong></td>
-<td align="center">3.923e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_CELL_PROJECTION_SIZE</strong></td>
-<td align="center">7.242e-05</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_CELL_PERIPHERY</strong></td>
-<td align="center">8.031e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_PLASMA_MEMBRANE</strong></td>
-<td align="center">8.031e-05</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPIRATION</strong></td>
-<td align="center">8.921e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_ENERGY_HOMEOSTASIS</strong></td>
-<td align="center">0.0001014</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_ENDOPLASMIC_RETICULUM_STRESS_INDUCED_INTRINSIC_APOPTOTIC_SIGNALING_PATHWAY</strong></td>
-<td align="center">0.000124</td>
-</tr>
-</tbody>
-</table>
-
 #### PBMC sample results
 
-<table>
-<caption>Table continues below</caption>
+<table style="width:81%;">
 <colgroup>
-<col width="92%" />
-<col width="7%" />
+<col width="41%" />
+<col width="16%" />
+<col width="11%" />
+<col width="11%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
+<th align="center">Gene_Set</th>
+<th align="center">Direction</th>
+<th align="center">FDR</th>
 <th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_SECONDARY_METABOLIC_PROCESS</strong></td>
+<td align="center">go regulation of secondary metabolic process</td>
+<td align="center">Down</td>
+<td align="center">0.01013</td>
 <td align="center">9</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_GRANULOCYTE_MIGRATION</strong></td>
+<td align="center">go granulocyte migration</td>
+<td align="center">Down</td>
+<td align="center">0.01013</td>
 <td align="center">51</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_TRANSCRIPTION_FROM_RNA_POLYMERASE_II_PROMOTER_IN_RESPONSE_TO_STRESS</strong></td>
+<td align="center">go positive regulation of transcription from rna polymerase ii promoter in response to stress</td>
+<td align="center">Down</td>
+<td align="center">0.01013</td>
 <td align="center">28</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_LYMPH_NODE_DEVELOPMENT</strong></td>
+<td align="center">go lymph node development</td>
+<td align="center">Up</td>
+<td align="center">0.01013</td>
 <td align="center">15</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_MONOCYTE_CHEMOTAXIS</strong></td>
+<td align="center">go monocyte chemotaxis</td>
+<td align="center">Down</td>
+<td align="center">0.02234</td>
 <td align="center">23</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
+<td align="center">go response to interferon gamma</td>
+<td align="center">Down</td>
+<td align="center">0.04605</td>
 <td align="center">139</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
+<td align="center">go cellular response to interferon gamma</td>
+<td align="center">Down</td>
+<td align="center">0.04605</td>
 <td align="center">117</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_VASCULAR_ENDOTHELIAL_GROWTH_FACTOR_PRODUCTION</strong></td>
+<td align="center">go positive regulation of vascular endothelial growth factor production</td>
+<td align="center">Down</td>
+<td align="center">0.04605</td>
 <td align="center">28</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_VIRAL_GENOME_REPLICATION</strong></td>
+<td align="center">go negative regulation of viral genome replication</td>
+<td align="center">Down</td>
+<td align="center">0.05122</td>
 <td align="center">60</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_EPITHELIAL_CELL_MATURATION</strong></td>
+<td align="center">go epithelial cell maturation</td>
+<td align="center">Down</td>
+<td align="center">0.05122</td>
 <td align="center">14</td>
 </tr>
 </tbody>
 </table>
 
-<table>
-<caption>Table continues below</caption>
-<colgroup>
-<col width="90%" />
-<col width="9%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">Direction</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_SECONDARY_METABOLIC_PROCESS</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_GRANULOCYTE_MIGRATION</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_TRANSCRIPTION_FROM_RNA_POLYMERASE_II_PROMOTER_IN_RESPONSE_TO_STRESS</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_LYMPH_NODE_DEVELOPMENT</strong></td>
-<td align="center">Up</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_MONOCYTE_CHEMOTAXIS</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_VASCULAR_ENDOTHELIAL_GROWTH_FACTOR_PRODUCTION</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_VIRAL_GENOME_REPLICATION</strong></td>
-<td align="center">Down</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_EPITHELIAL_CELL_MATURATION</strong></td>
-<td align="center">Down</td>
-</tr>
-</tbody>
-</table>
-
-<table>
-<colgroup>
-<col width="91%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">PValue</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_SECONDARY_METABOLIC_PROCESS</strong></td>
-<td align="center">2.955e-06</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_GRANULOCYTE_MIGRATION</strong></td>
-<td align="center">5.253e-06</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_TRANSCRIPTION_FROM_RNA_POLYMERASE_II_PROMOTER_IN_RESPONSE_TO_STRESS</strong></td>
-<td align="center">8.208e-06</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_LYMPH_NODE_DEVELOPMENT</strong></td>
-<td align="center">8.738e-06</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_MONOCYTE_CHEMOTAXIS</strong></td>
-<td align="center">2.409e-05</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
-<td align="center">6.079e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
-<td align="center">7.178e-05</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_POSITIVE_REGULATION_OF_VASCULAR_ENDOTHELIAL_GROWTH_FACTOR_PRODUCTION</strong></td>
-<td align="center">7.947e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_VIRAL_GENOME_REPLICATION</strong></td>
-<td align="center">0.0001017</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_EPITHELIAL_CELL_MATURATION</strong></td>
-<td align="center">0.0001187</td>
-</tr>
-</tbody>
-</table>
-
 #### PAXgene sample results
 
-<table>
-<caption>Table continues below</caption>
+<table style="width:79%;">
 <colgroup>
-<col width="74%" />
+<col width="40%" />
+<col width="16%" />
 <col width="11%" />
-<col width="14%" />
+<col width="11%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Set</th>
 <th align="center">Direction</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_SECONDARY_METABOLIC_PROCESS</strong></td>
+<td align="center">go regulation of secondary metabolic process</td>
+<td align="center">Down</td>
+<td align="center">0.01588</td>
 <td align="center">9</td>
-<td align="center">Down</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_VIRAL_GENOME_REPLICATION</strong></td>
+<td align="center">go negative regulation of viral genome replication</td>
+<td align="center">Down</td>
+<td align="center">0.1076</td>
 <td align="center">61</td>
-<td align="center">Down</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_RESPONSE_TO_TYPE_I_INTERFERON</strong></td>
+<td align="center">go response to type i interferon</td>
+<td align="center">Down</td>
+<td align="center">0.1213</td>
 <td align="center">78</td>
-<td align="center">Down</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_CELLULAR_DEFENSE_RESPONSE</strong></td>
+<td align="center">go cellular defense response</td>
+<td align="center">Down</td>
+<td align="center">0.1994</td>
 <td align="center">53</td>
-<td align="center">Down</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_INTERFERON_GAMMA_MEDIATED_SIGNALING_PATHWAY</strong></td>
+<td align="center">go interferon gamma mediated signaling pathway</td>
+<td align="center">Down</td>
+<td align="center">0.222</td>
 <td align="center">82</td>
-<td align="center">Down</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
+<td align="center">go cellular response to interferon gamma</td>
+<td align="center">Down</td>
+<td align="center">0.222</td>
 <td align="center">112</td>
-<td align="center">Down</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_GANGLION_DEVELOPMENT</strong></td>
+<td align="center">go ganglion development</td>
+<td align="center">Down</td>
+<td align="center">0.3379</td>
 <td align="center">3</td>
-<td align="center">Down</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_RESPIRATORY_BURST</strong></td>
+<td align="center">go respiratory burst</td>
+<td align="center">Down</td>
+<td align="center">0.3575</td>
 <td align="center">15</td>
-<td align="center">Down</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>GO_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
+<td align="center">go response to interferon gamma</td>
+<td align="center">Down</td>
+<td align="center">0.3575</td>
 <td align="center">132</td>
-<td align="center">Down</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_VITAMIN_D</strong></td>
+<td align="center">go cellular response to vitamin d</td>
+<td align="center">Down</td>
+<td align="center">0.5703</td>
 <td align="center">12</td>
-<td align="center">Down</td>
 </tr>
 </tbody>
 </table>
 
-<table style="width:92%;">
-<colgroup>
-<col width="79%" />
-<col width="12%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">PValue</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>GO_REGULATION_OF_SECONDARY_METABOLIC_PROCESS</strong></td>
-<td align="center">3.427e-06</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_NEGATIVE_REGULATION_OF_VIRAL_GENOME_REPLICATION</strong></td>
-<td align="center">4.641e-05</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_RESPONSE_TO_TYPE_I_INTERFERON</strong></td>
-<td align="center">7.852e-05</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_CELLULAR_DEFENSE_RESPONSE</strong></td>
-<td align="center">0.0001721</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_INTERFERON_GAMMA_MEDIATED_SIGNALING_PATHWAY</strong></td>
-<td align="center">0.0002616</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
-<td align="center">0.0002874</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_GANGLION_DEVELOPMENT</strong></td>
-<td align="center">0.0005102</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_RESPIRATORY_BURST</strong></td>
-<td align="center">0.0006813</td>
-</tr>
-<tr class="odd">
-<td align="center"><strong>GO_RESPONSE_TO_INTERFERON_GAMMA</strong></td>
-<td align="center">0.0006942</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>GO_CELLULAR_RESPONSE_TO_VITAMIN_D</strong></td>
-<td align="center">0.00123</td>
-</tr>
-</tbody>
-</table>
-
-### MTN-007 gene sets: top 10 results
+### MTN-007 gene sets
 
 Here I am comparing the probes in this experiment to significantly differentially expressed probes from MTN-007 9cm biopsies at 7 days.
 
-#### Duodenal sample results
-
-<table style="width:65%;">
+<table style="width:75%;">
 <colgroup>
-<col width="23%" />
+<col width="18%" />
 <col width="12%" />
 <col width="16%" />
-<col width="12%" />
+<col width="13%" />
+<col width="13%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
+<th align="center">Gene_Sets</th>
+<th align="center">Tissue</th>
 <th align="center">Direction</th>
-<th align="center">PValue</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>Mtn007Down</strong></td>
-<td align="center">765</td>
+<td align="center">MTN_007 Down</td>
+<td align="center">Duodenal</td>
 <td align="center">Down</td>
-<td align="center">6.665e-06</td>
+<td align="center">1.333e-05</td>
+<td align="center">765</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Mtn007Up</strong></td>
-<td align="center">181</td>
+<td align="center">MTN_007 Up</td>
+<td align="center">Duodenal</td>
 <td align="center">Up</td>
 <td align="center">0.008987</td>
+<td align="center">181</td>
 </tr>
-</tbody>
-</table>
-
-#### Rectal sample results
-
-<table style="width:64%;">
-<colgroup>
-<col width="23%" />
-<col width="12%" />
-<col width="16%" />
-<col width="11%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
-<th align="center">Direction</th>
-<th align="center">PValue</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td align="center"><strong>Mtn007Down</strong></td>
-<td align="center">787</td>
+<td align="center">MTN_007 Down</td>
+<td align="center">Rectal</td>
 <td align="center">Down</td>
-<td align="center">7.12e-06</td>
+<td align="center">1.424e-05</td>
+<td align="center">787</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Mtn007Up</strong></td>
-<td align="center">191</td>
+<td align="center">MTN_007 Up</td>
+<td align="center">Rectal</td>
 <td align="center">Down</td>
 <td align="center">0.004617</td>
+<td align="center">191</td>
 </tr>
-</tbody>
-</table>
-
-#### PBMC sample results
-
-<table style="width:64%;">
-<colgroup>
-<col width="23%" />
-<col width="12%" />
-<col width="16%" />
-<col width="11%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
-<th align="center">Direction</th>
-<th align="center">PValue</th>
-</tr>
-</thead>
-<tbody>
 <tr class="odd">
-<td align="center"><strong>Mtn007Down</strong></td>
-<td align="center">735</td>
-<td align="center">Down</td>
-<td align="center">0.3501</td>
-</tr>
-<tr class="even">
-<td align="center"><strong>Mtn007Up</strong></td>
-<td align="center">152</td>
+<td align="center">MTN_007 Down</td>
+<td align="center">PBMC</td>
 <td align="center">Down</td>
 <td align="center">0.369</td>
-</tr>
-</tbody>
-</table>
-
-#### PAXgene sample results
-
-<table style="width:64%;">
-<colgroup>
-<col width="23%" />
-<col width="12%" />
-<col width="16%" />
-<col width="11%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="center"> </th>
-<th align="center">NGenes</th>
-<th align="center">Direction</th>
-<th align="center">PValue</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"><strong>Mtn007Down</strong></td>
-<td align="center">675</td>
-<td align="center">Down</td>
-<td align="center">0.04021</td>
+<td align="center">735</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>Mtn007Up</strong></td>
-<td align="center">144</td>
+<td align="center">MTN_007 Up</td>
+<td align="center">PBMC</td>
+<td align="center">Down</td>
+<td align="center">0.369</td>
+<td align="center">152</td>
+</tr>
+<tr class="odd">
+<td align="center">MTN_007 Down</td>
+<td align="center">PAXgene</td>
+<td align="center">Down</td>
+<td align="center">0.08041</td>
+<td align="center">675</td>
+</tr>
+<tr class="even">
+<td align="center">MTN_007 Up</td>
+<td align="center">PAXgene</td>
 <td align="center">Up</td>
 <td align="center">0.7308</td>
+<td align="center">144</td>
 </tr>
 </tbody>
 </table>

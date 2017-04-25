@@ -6,7 +6,7 @@ output: github_document
 
 ##Experimental set up
 
-We isolated RNA from four different sample types from 8 donors pre- and post- initiation of prEP. The pre-initation was called "Enrollment"  and  the post-initiation visit was called "Visit2"
+We isolated RNA from four different sample types from 8 donors pre- and post- initiation of PreP. The pre-initation was called "Enrollment"  and  the post-initiation visit was called "Visit2"
 
 Sample Types
 
@@ -15,7 +15,7 @@ Sample Types
  * PAXgene (whole blood collected into RNA preservative)
  * PBMC (PBMC isolated from whole blood)
 
-
+NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling perscription on time. 
 
 
 ```{r setup, include=FALSE}
@@ -138,7 +138,7 @@ px_norm_batch<-lumiN(px_trans_batch, method = "rsn")
 
 ```
 
-These normalized samples all look... normal.
+These normalized samples all look good.
 
 
 
@@ -387,14 +387,34 @@ camera(y = exprs(expressedProbes), index = index, design = design, contrast = co
 
 ```
 
+```{r camera results function}
+# a function to make the camera results look better
+
+camera_results<-function(camera_result){
+  
+camera_result$Gene_Set <- rownames(camera_result)
+rownames(camera_result)<-NULL
+
+camera_result%>%
+  mutate("Gene_Set" = tolower(Gene_Set))%>%
+  head(n = 10)%>%
+  mutate(Gene_Set = str_replace(Gene_Set,"hallmark_",""))%>%
+  mutate(Gene_Set = str_replace_all(Gene_Set,"_"," "))%>%
+  select(Gene_Set, Direction, FDR, NGenes)%>%
+  pander()
+}  
+  
+
+
+```
 
 ####Duodenal sample results
 ```{r hallmark duod}
 
 #I want to use the "Hs.H" hallmark genesets
-pander(camera_function(duod_expressed, Hs.H) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(duod_expressed, Hs.H))
+
+    
 ```
 
 
@@ -402,30 +422,22 @@ pander(camera_function(duod_expressed, Hs.H) %>%
 ```{r hallmark rec}
 
 #I want to use the "Hs.H" hallmark genesets
-pander(camera_function(rec_expressed, Hs.H) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(rec_expressed, Hs.H))
 ```
 
 ####PBMC sample results
 ```{r hallmark pb}
 
 #I want to use the "Hs.H" hallmark genesets
-pander(camera_function(pb_expressed, Hs.H) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(pb_expressed, Hs.H))
 ```
 
 ####PAXgene sample results
 ```{r hallmark px}
 
 #I want to use the "Hs.H" hallmark genesets
-pander(camera_function(px_expressed, Hs.H) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(px_expressed, Hs.H))
 ```
-
-
 
 
 ### GO biological process gene sets: top 10 results
@@ -439,9 +451,7 @@ Sean wrote some code (https://github.com/seaaan/Bioinformatics/tree/master/GOTer
 load("geneSets_for_CAMERA/Hs.c5.BP.rdata")
 
 #I want to use the "Hs.c5.BP"  genesets
-pander(camera_function(duod_expressed, Hs.c5.BP) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(duod_expressed, Hs.c5.BP))
 ```
 
 
@@ -449,68 +459,49 @@ pander(camera_function(duod_expressed, Hs.c5.BP) %>%
 ```{r }
 
 #I want to use the "Hs.c5.BP"  genesets
-pander(camera_function(rec_expressed, Hs.c5.BP) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(rec_expressed, Hs.c5.BP))
 ```
 
 ####PBMC sample results
 ```{r }
 
 #I want to use the "Hs.c5.BP"  genesets
-pander(camera_function(pb_expressed, Hs.c5.BP) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(pb_expressed, Hs.c5.BP))
 ```
 
 ####PAXgene sample results
 ```{r}
 
 #I want to use the "Hs.c5.BP" genesets
-pander(camera_function(px_expressed, Hs.c5.BP) %>%
-  select(-FDR)%>%
-  head(n = 10))
+camera_results(camera_function(px_expressed, Hs.c5.BP))
 ```
 
-### MTN-007 gene sets: top 10 results
+### MTN-007 gene sets
 
 Here I am comparing the probes in this experiment to significantly differentially expressed probes from MTN-007 9cm biopsies at 7 days.
 
 
-
-####Duodenal sample results
 ```{r }
 
 load("geneSets_for_CAMERA/mtn_007_sets.Rda")
 
-
-
 #I want to use the "mtn_007_sets"  genesets
-pander(camera_function(duod_expressed, mtn_007_sets) %>%
-  select(-FDR))
+
+mtn_007<-rbind(camera_function(duod_expressed, mtn_007_sets),
+      camera_function(rec_expressed, mtn_007_sets),
+      camera_function(pb_expressed, mtn_007_sets),
+      camera_function(px_expressed, mtn_007_sets))
+
+mtn_007$Gene_Sets<- rownames(mtn_007) 
+rownames(mtn_007)<-NULL
+
+
+mtn_007<-mtn_007 %>%
+  mutate(Gene_Sets = rep(c("MTN_007 Down", "MTN_007 Up"), times = 4))%>%
+  mutate(Tissue = c("Duodenal","Duodenal", "Rectal","Rectal", "PBMC", "PBMC", "PAXgene", "PAXgene"))%>%
+  select(Gene_Sets, Tissue, Direction, FDR, NGenes)
+
+
+pander(mtn_007)
 ```
 
-
-####Rectal sample results
-```{r}
-
-#I want to use the "mtn_007_sets"  genesets
-pander(camera_function(rec_expressed, mtn_007_sets) %>%
-  select(-FDR))
-```
-
-####PBMC sample results
-```{r }
-
-#I want to use the "mtn_007_sets"  genesets
-pander(camera_function(pb_expressed, mtn_007_sets) %>%
-  select(-FDR))
-```
-
-####PAXgene sample results
-```{r }
-
-#I want to use the "mtn_007_sets"  genesets
-pander(camera_function(px_expressed, mtn_007_sets) %>%
-  select(-FDR))
-```
