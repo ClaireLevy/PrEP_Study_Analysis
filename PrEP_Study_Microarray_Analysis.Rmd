@@ -1,5 +1,5 @@
 ---
-title: "PrEP Study Microarray Analysis"
+title: "PreP Study Microarray Analysis"
 author: "Claire Levy"
 output: github_document
 ---
@@ -15,7 +15,7 @@ Sample Types
  * PAXgene (whole blood collected into RNA preservative)
  * PBMC (PBMC isolated from whole blood)
 
-NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling perscription on time. 
+NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling prescription on time. 
 
 
 ```{r setup, include=FALSE}
@@ -58,9 +58,6 @@ complete_lumibatch<-new("LumiBatch",
                      controlData = controlData(lumibatch),
                      featureData = featureData(lumibatch))
 ```
-
-
-
 
 
 
@@ -325,7 +322,7 @@ The Duodenal samples were the only ones with any differentially expressed probes
 
 ```{r toptable}
 
-ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number=Inf, p.value = 0.05, lfc = 0.5 )
+ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf, p.value = 0.05, lfc = 0.5 )
 
 pander(ttDuod %>%
          mutate(Direction = ifelse(logFC<0, "DOWN", "UP"))%>%
@@ -452,6 +449,7 @@ load("geneSets_for_CAMERA/Hs.c5.BP.rdata")
 
 #I want to use the "Hs.c5.BP"  genesets
 camera_results(camera_function(duod_expressed, Hs.c5.BP))
+
 ```
 
 
@@ -505,3 +503,81 @@ mtn_007<-mtn_007 %>%
 pander(mtn_007)
 ```
 
+
+##Which DE probes from the PrEP study overlap with those from MTN-007?
+
+```{r mtn007 overlaps}
+
+#read in mtn007 DEG data 7 days 9cm
+
+mtn007_7d_9cm<-read.csv("raw_data/mtn-007-7d-9cm-DEGs.csv")
+
+overlap<-ttDuod[ttDuod$TargetID %in% mtn007_7d_9cm$TargetId,]%>%
+  select(TargetID, DEFINITION, logFC)
+
+pander(overlap)
+
+```
+
+```{r inf alpha founder sets }
+
+#to drill down into the hallmark results, I'll run camera on the founder sets of the hallmark interferon alpha set.
+
+
+#they are downloaded as a .gmx file from here: http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_INTERFERON_ALPHA_RESPONSE.html
+
+#then read in as described here: http://svitsrv25.epfl.ch/R-doc/library/sigPathway/html/importGeneSets.html
+
+
+library(sigPathway)
+library(plyr)
+
+#read in file
+
+hallmark_infn_a_founders<-gmxToG("geneSets_for_CAMERA/HALLMARK_INTERFERON_ALPHA_RESPONSE.gmx", verbose = TRUE)
+
+
+#the last set appears to only contain "NA", so I'm going to take that out
+
+hallmark_infn_a_founders[[83]]<-NULL
+
+#to get into correct format (same that I've used above that will work with my camera function) :
+#lapply extract src from each element, then extract probes from each, then name probes with src.
+
+#note that probes are symbols not entrez IDs
+
+
+#get the names of the sets
+getNames<-function(geneSets){
+geneSets$src
+}
+
+#get just the probes
+getProbes<-function(geneSets){
+geneSets$probes
+}
+
+
+#apply functions over the list
+setNames<-lapply(hallmark_infn_a_founders, FUN = getNames)
+
+setProbes<-lapply(hallmark_infn_a_founders, FUN = getProbes)
+
+#name the probes with the set names
+names(setProbes)<-setNames
+
+```
+
+```{r trying xml file}
+
+library(GSEABase)
+
+dat<-getBroadSets("geneSets_for_CAMERA/HALLMARK_INTERFERON_ALPHA_RESPONSE.xml",geneIdType(EntrezIdentifier(annotation = "org.Hs.eg.db")))
+
+
+
+entrez_dat<-mapIdentifiers(dat, EntrezIdentifier(annotation = "org.Hs.eg.db"))
+
+
+
+```
