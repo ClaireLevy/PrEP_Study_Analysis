@@ -1,4 +1,4 @@
-PrEP Study Microarray Analysis
+PreP Study Microarray Analysis
 ================
 Claire Levy
 
@@ -14,7 +14,7 @@ Sample Types
 -   PAXgene (whole blood collected into RNA preservative)
 -   PBMC (PBMC isolated from whole blood)
 
-NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling perscription on time.
+NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling prescription on time.
 
 Plots of non-normalized data
 
@@ -1307,6 +1307,52 @@ Here I am comparing the probes in this experiment to significantly differentiall
 <td align="center">Up</td>
 <td align="center">0.7308</td>
 <td align="center">144</td>
+</tr>
+</tbody>
+</table>
+
+Which DE probes from the PrEP study overlap with those from MTN-007?
+--------------------------------------------------------------------
+
+<table style="width:86%;">
+<colgroup>
+<col width="19%" />
+<col width="15%" />
+<col width="41%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">TargetID</th>
+<th align="center">DEFINITION</th>
+<th align="center">logFC</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>3850328</strong></td>
+<td align="center">MUPCDH</td>
+<td align="center">Homo sapiens mucin-like protocadherin (MUPCDH), transcript variant 1, mRNA.</td>
+<td align="center">-0.5277</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>670333</strong></td>
+<td align="center">EDN3</td>
+<td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 3, mRNA.</td>
+<td align="center">-0.6583</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>5870221</strong></td>
+<td align="center">GOLPH4</td>
+<td align="center">Homo sapiens golgi phosphoprotein 4 (GOLPH4), mRNA.</td>
+<td align="center">-0.5256</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>1410240</strong></td>
+<td align="center">EDN3</td>
+<td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 2, mRNA.</td>
+<td align="center">-0.5274</td>
 </tr>
 </tbody>
 </table>

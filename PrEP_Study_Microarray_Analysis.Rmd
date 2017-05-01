@@ -21,12 +21,13 @@ NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 
-library(tidyverse)
+library(dplyr)
 library(lumi)
 library(limma)
 library(pander)
 library(stringr)
 library(reshape2)
+library(ggplot2)
 
 ```
 
@@ -397,7 +398,7 @@ camera_result%>%
   head(n = 10)%>%
   mutate(Gene_Set = str_replace(Gene_Set,"hallmark_",""))%>%
   mutate(Gene_Set = str_replace_all(Gene_Set,"_"," "))%>%
-  select(Gene_Set, Direction, FDR, NGenes)%>%
+  dplyr::select(Gene_Set, Direction, FDR, NGenes)%>%
   pander()
 }  
   
@@ -519,65 +520,3 @@ pander(overlap)
 
 ```
 
-```{r inf alpha founder sets }
-
-#to drill down into the hallmark results, I'll run camera on the founder sets of the hallmark interferon alpha set.
-
-
-#they are downloaded as a .gmx file from here: http://software.broadinstitute.org/gsea/msigdb/cards/HALLMARK_INTERFERON_ALPHA_RESPONSE.html
-
-#then read in as described here: http://svitsrv25.epfl.ch/R-doc/library/sigPathway/html/importGeneSets.html
-
-
-library(sigPathway)
-library(plyr)
-
-#read in file
-
-hallmark_infn_a_founders<-gmxToG("geneSets_for_CAMERA/HALLMARK_INTERFERON_ALPHA_RESPONSE.gmx", verbose = TRUE)
-
-
-#the last set appears to only contain "NA", so I'm going to take that out
-
-hallmark_infn_a_founders[[83]]<-NULL
-
-#to get into correct format (same that I've used above that will work with my camera function) :
-#lapply extract src from each element, then extract probes from each, then name probes with src.
-
-#note that probes are symbols not entrez IDs
-
-
-#get the names of the sets
-getNames<-function(geneSets){
-geneSets$src
-}
-
-#get just the probes
-getProbes<-function(geneSets){
-geneSets$probes
-}
-
-
-#apply functions over the list
-setNames<-lapply(hallmark_infn_a_founders, FUN = getNames)
-
-setProbes<-lapply(hallmark_infn_a_founders, FUN = getProbes)
-
-#name the probes with the set names
-names(setProbes)<-setNames
-
-```
-
-```{r trying xml file}
-
-library(GSEABase)
-
-dat<-getBroadSets("geneSets_for_CAMERA/HALLMARK_INTERFERON_ALPHA_RESPONSE.xml",geneIdType(EntrezIdentifier(annotation = "org.Hs.eg.db")))
-
-
-
-entrez_dat<-mapIdentifiers(dat, EntrezIdentifier(annotation = "org.Hs.eg.db"))
-
-
-
-```
