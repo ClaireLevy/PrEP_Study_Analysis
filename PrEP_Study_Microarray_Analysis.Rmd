@@ -520,3 +520,50 @@ pander(overlap)
 
 ```
 
+## CAMERA test of Hallmark interferon alpha geneset founder sets
+
+```{r inf alpha founder sets }
+
+#to drill down into the hallmark results, I'll run camera on the founder sets of the hallmark interferon alpha set.
+
+
+library(GSEABase)
+library(illuminaHumanv4.db)
+
+#I'm using the illuminaHumanv4.db annotation database because that's the kind of chip we used. http://bioconductor.org/packages/release/data/annotation/html/illuminaHumanv4.db.html  but you can us a different annotation if you want to.
+
+inf_a_founders<-getBroadSets("geneSets_for_CAMERA/HALLMARK_INTERFERON_ALPHA_RESPONSE.xml",geneIdType(EntrezIdentifier(annotation = "illuminaHumanv4.db")))
+
+
+#map the symbols to entrez IDs because that's the identifier I used in my eSet.
+inf_a_founders_entrez<-mapIdentifiers(inf_a_founders, EntrezIdentifier(annotation = "illuminaHumanv4.db"))
+
+#here is my gene set, a list of 82 named elements and in each element are the entrez Ids in the set.
+
+inf_a_founders_set<-geneIds(inf_a_founders_entrez)
+
+```
+
+####Duodenal sample Results
+```{r test inf alpha}
+
+camera_results(camera_function(duod_expressed, inf_a_founders_set))
+
+```
+
+
+####Rectal sample Results
+```{r }
+camera_results(camera_function(rec_expressed, inf_a_founders_set))
+```
+
+####PBMC sample results
+```{r }
+camera_results(camera_function(pb_expressed, inf_a_founders_set))
+```
+
+####PAXgene sample results
+```{r}
+
+camera_results(camera_function(px_expressed, inf_a_founders_set))
+```

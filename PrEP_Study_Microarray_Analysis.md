@@ -1356,3 +1356,330 @@ Which DE probes from the PrEP study overlap with those from MTN-007?
 </tr>
 </tbody>
 </table>
+
+CAMERA test of Hallmark interferon alpha geneset founder sets
+-------------------------------------------------------------
+
+#### Duodenal sample Results
+
+<table style="width:88%;">
+<colgroup>
+<col width="43%" />
+<col width="16%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Gene_Set</th>
+<th align="center">Direction</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">moserle ifna response</td>
+<td align="center">Up</td>
+<td align="center">4.674e-12</td>
+<td align="center">40</td>
+</tr>
+<tr class="even">
+<td align="center">bennett systemic lupus erythematosus</td>
+<td align="center">Up</td>
+<td align="center">4.674e-12</td>
+<td align="center">36</td>
+</tr>
+<tr class="odd">
+<td align="center">einav interferon signature in cancer</td>
+<td align="center">Up</td>
+<td align="center">2.082e-10</td>
+<td align="center">42</td>
+</tr>
+<tr class="even">
+<td align="center">zhang interferon response</td>
+<td align="center">Up</td>
+<td align="center">6.545e-10</td>
+<td align="center">31</td>
+</tr>
+<tr class="odd">
+<td align="center">dauer stat3 targets dn</td>
+<td align="center">Up</td>
+<td align="center">1.478e-09</td>
+<td align="center">64</td>
+</tr>
+<tr class="even">
+<td align="center">hecker ifnb1 targets</td>
+<td align="center">Up</td>
+<td align="center">2.447e-09</td>
+<td align="center">104</td>
+</tr>
+<tr class="odd">
+<td align="center">browne interferon responsive genes</td>
+<td align="center">Up</td>
+<td align="center">3.261e-09</td>
+<td align="center">99</td>
+</tr>
+<tr class="even">
+<td align="center">urosevic response to imiquimod</td>
+<td align="center">Up</td>
+<td align="center">2.097e-08</td>
+<td align="center">33</td>
+</tr>
+<tr class="odd">
+<td align="center">radaeva response to ifna1 up</td>
+<td align="center">Up</td>
+<td align="center">4.137e-08</td>
+<td align="center">69</td>
+</tr>
+<tr class="even">
+<td align="center">stambolsky targets of mutated tp53 dn</td>
+<td align="center">Up</td>
+<td align="center">1.124e-07</td>
+<td align="center">56</td>
+</tr>
+</tbody>
+</table>
+
+#### Rectal sample Results
+
+<table style="width:85%;">
+<colgroup>
+<col width="43%" />
+<col width="16%" />
+<col width="12%" />
+<col width="12%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Gene_Set</th>
+<th align="center">Direction</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">honma docetaxel resistance</td>
+<td align="center">Up</td>
+<td align="center">0.005468</td>
+<td align="center">43</td>
+</tr>
+<tr class="even">
+<td align="center">module 119</td>
+<td align="center">Down</td>
+<td align="center">0.005468</td>
+<td align="center">172</td>
+</tr>
+<tr class="odd">
+<td align="center">module 171</td>
+<td align="center">Down</td>
+<td align="center">0.01158</td>
+<td align="center">151</td>
+</tr>
+<tr class="even">
+<td align="center">module 436</td>
+<td align="center">Down</td>
+<td align="center">0.01158</td>
+<td align="center">141</td>
+</tr>
+<tr class="odd">
+<td align="center">module 292</td>
+<td align="center">Down</td>
+<td align="center">0.01158</td>
+<td align="center">144</td>
+</tr>
+<tr class="even">
+<td align="center">module 345</td>
+<td align="center">Down</td>
+<td align="center">0.01158</td>
+<td align="center">134</td>
+</tr>
+<tr class="odd">
+<td align="center">xu hgf targets induced by akt1 6hr</td>
+<td align="center">Up</td>
+<td align="center">0.01158</td>
+<td align="center">24</td>
+</tr>
+<tr class="even">
+<td align="center">module 208</td>
+<td align="center">Down</td>
+<td align="center">0.01358</td>
+<td align="center">132</td>
+</tr>
+<tr class="odd">
+<td align="center">reactome interferon gamma signaling</td>
+<td align="center">Down</td>
+<td align="center">0.01358</td>
+<td align="center">68</td>
+</tr>
+<tr class="even">
+<td align="center">becker tamoxifen resistance up</td>
+<td align="center">Up</td>
+<td align="center">0.02004</td>
+<td align="center">56</td>
+</tr>
+</tbody>
+</table>
+
+#### PBMC sample results
+
+<table style="width:86%;">
+<colgroup>
+<col width="41%" />
+<col width="16%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Gene_Set</th>
+<th align="center">Direction</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">liang silenced by methylation 2</td>
+<td align="center">Down</td>
+<td align="center">7.635e-05</td>
+<td align="center">47</td>
+</tr>
+<tr class="even">
+<td align="center">hecker ifnb1 targets</td>
+<td align="center">Down</td>
+<td align="center">7.635e-05</td>
+<td align="center">100</td>
+</tr>
+<tr class="odd">
+<td align="center">seitz neoplastic transformation by 8p deletion up</td>
+<td align="center">Down</td>
+<td align="center">0.0002599</td>
+<td align="center">66</td>
+</tr>
+<tr class="even">
+<td align="center">moserle ifna response</td>
+<td align="center">Down</td>
+<td align="center">0.001732</td>
+<td align="center">39</td>
+</tr>
+<tr class="odd">
+<td align="center">jackson dnmt1 targets up</td>
+<td align="center">Down</td>
+<td align="center">0.001922</td>
+<td align="center">77</td>
+</tr>
+<tr class="even">
+<td align="center">jison sickle cell disease up</td>
+<td align="center">Down</td>
+<td align="center">0.003179</td>
+<td align="center">208</td>
+</tr>
+<tr class="odd">
+<td align="center">roeth tert targets up</td>
+<td align="center">Down</td>
+<td align="center">0.003262</td>
+<td align="center">15</td>
+</tr>
+<tr class="even">
+<td align="center">takeda targets of nup98 hoxa9 fusion 8d up</td>
+<td align="center">Down</td>
+<td align="center">0.003262</td>
+<td align="center">121</td>
+</tr>
+<tr class="odd">
+<td align="center">mel18 dn.v1 dn</td>
+<td align="center">Down</td>
+<td align="center">0.004138</td>
+<td align="center">93</td>
+</tr>
+<tr class="even">
+<td align="center">dauer stat3 targets dn</td>
+<td align="center">Down</td>
+<td align="center">0.005241</td>
+<td align="center">65</td>
+</tr>
+</tbody>
+</table>
+
+#### PAXgene sample results
+
+<table style="width:86%;">
+<colgroup>
+<col width="41%" />
+<col width="16%" />
+<col width="13%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Gene_Set</th>
+<th align="center">Direction</th>
+<th align="center">FDR</th>
+<th align="center">NGenes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">moserle ifna response</td>
+<td align="center">Down</td>
+<td align="center">0.0002304</td>
+<td align="center">40</td>
+</tr>
+<tr class="even">
+<td align="center">einav interferon signature in cancer</td>
+<td align="center">Down</td>
+<td align="center">0.0002304</td>
+<td align="center">43</td>
+</tr>
+<tr class="odd">
+<td align="center">browne interferon responsive genes</td>
+<td align="center">Down</td>
+<td align="center">0.0002304</td>
+<td align="center">92</td>
+</tr>
+<tr class="even">
+<td align="center">bowie response to tamoxifen</td>
+<td align="center">Down</td>
+<td align="center">0.0002304</td>
+<td align="center">29</td>
+</tr>
+<tr class="odd">
+<td align="center">hecker ifnb1 targets</td>
+<td align="center">Down</td>
+<td align="center">0.0002304</td>
+<td align="center">107</td>
+</tr>
+<tr class="even">
+<td align="center">zhang interferon response</td>
+<td align="center">Down</td>
+<td align="center">0.0002304</td>
+<td align="center">32</td>
+</tr>
+<tr class="odd">
+<td align="center">bennett systemic lupus erythematosus</td>
+<td align="center">Down</td>
+<td align="center">0.0002881</td>
+<td align="center">40</td>
+</tr>
+<tr class="even">
+<td align="center">dauer stat3 targets dn</td>
+<td align="center">Down</td>
+<td align="center">0.0003593</td>
+<td align="center">62</td>
+</tr>
+<tr class="odd">
+<td align="center">sana response to ifng up</td>
+<td align="center">Down</td>
+<td align="center">0.0003593</td>
+<td align="center">81</td>
+</tr>
+<tr class="even">
+<td align="center">seitz neoplastic transformation by 8p deletion up</td>
+<td align="center">Down</td>
+<td align="center">0.000514</td>
+<td align="center">62</td>
+</tr>
+</tbody>
+</table>
