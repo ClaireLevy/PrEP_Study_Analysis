@@ -1,0 +1,283 @@
+---
+title: 'PreP Study microarray analysis: PBMC and PAXgene only'
+author: "Claire Levy"
+date: "May 22, 2017"
+output: html_document
+---
+
+---
+title: "PreP Study Microarray Analysis"
+author: "Claire Levy"
+output: github_document
+---
+
+##Experimental set up
+
+We isolated RNA from four different sample types from 8 donors pre- and post- initiation of PreP. The pre-initation was called "Enrollment"  and  the post-initiation visit was called "Visit2"
+
+Sample Types
+
+ * Duodenal biopsy
+ * Rectal biopsy
+ * PAXgene (whole blood collected into RNA preservative)
+ * PBMC (PBMC isolated from whole blood)
+
+NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling prescription on time. 
+
+### Analysis
+
+Here I will subset the data to just the PAXgene and the PBMC samples and compare them at the enrollment time point. 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(dplyr)
+library(lumi)
+library(limma)
+library(pander)
+library(stringr)
+library(reshape2)
+library(ggplot2)
+
+```
+
+```{r read in raw data, cache = TRUE, results = 'hide'}
+
+
+lumibatch<-lumiR(fileName = "raw_data/2017.04.18.smhughesFinalReport.txt ",
+            detectionTh = 0.05,
+            annotationColumn=c('ENTREZ_GENE_ID','ACCESSION', 'SYMBOL', 'PROBE_SEQUENCE', 'PROBE_START', 'CHROMOSOME', 'PROBE_CHR_ORIENTATION', 'PROBE_COORDINATES', 'DEFINITION'))
+
+
+#read in pData
+
+#Note that my pData file has rownames that match the sampleNames used in the array AND I have a column called sampleNames containing the same data because I'll want to use it later when I make MDS plots and need to merge on sampleNames.  This is annoying but kind of necessary.
+
+pData <-read.table("raw_data/pData.txt", header = TRUE, stringsAsFactors = FALSE)
+
+
+
+
+#put pData into an adf
+adf<-AnnotatedDataFrame(data = pData)
+
+
+complete_lumibatch<-new("LumiBatch",
+                     assayData = assayData(lumibatch),
+                     phenoData = adf,
+                     detection = detection(lumibatch),
+                     controlData = controlData(lumibatch),
+                     featureData = featureData(lumibatch))
+```
+
+```{r subset data}
+
+
+#subset for just enrollment and just paxgene or PBMC
+
+pax_PBMC<-complete_lumibatch[  ,complete_lumibatch$Tissue =="PBMC" | complete_lumibatch$Tissue == "PAXgene"]
+
+pax_PBMC_enroll<-pax_PBMC[,pax_PBMC$Visit == "Enrollment"]
+
+```
+
+Plots of non-normalized data
+
+```{r nonnormalized data}
+
+#MDS
+
+dim_data<- plotMDS(pax_PBMC_enroll)
+  d<-data.frame(data.frame(Dim1 = dim_data$x, 
+               Dim2 = dim_data$y, 
+               sampleNames = names(dim_data$x)))
+  
+  d<-merge(d, pData, by = "sampleNames")
+  
+  ggplot(d, aes(x=Dim1, y = Dim2))+
+  geom_point(aes(color = Tissue), size = 3)
+
+
+
+
+
+
+#A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot. The default is c(5, 4, 4, 2) + 0.1.
+
+par(cex= 0.7, mar = c(10,10,10,10))
+boxplot(pax_PBMC_enroll, col = c("#1b9e77","#984ea3"))
+
+#This plot shows that the PBMC sample are uniformly higher-expressing than the paxgene samples, but to do this comparison I need to normalize them together.
+
+plotDensities(pax_PBMC_enroll,legend = FALSE, main = "non-normalized PAXgene and PBMC, enrollment only")
+
+
+```
+
+
+```{r background correction, results = 'hide'}
+
+#the data we got from the core has no background correction (I don't think it did anyway...) so I will do it here.
+
+
+B_pax_PBMC_enroll<-lumiB(pax_PBMC_enroll, method = "bgAdjust")
+
+```
+
+
+
+
+
+```{r vst transform and robust spline normalization, results = 'hide'}
+
+
+
+
+TB_pax_PBMC_enroll<- lumiT(B_pax_PBMC_enroll)
+NTB_pax_PBMC_enroll<-lumiN(TB_pax_PBMC_enroll, method = "rsn")
+
+
+```
+
+These normalized samples all look good.
+
+
+
+```{r MDS plot function}
+
+# a function to make nice MDS plots
+
+#plotMDS  invisibly returns a large object that has the actual dimensions data in matrices called x and y (one for each dimension)
+
+#Dim1 is a column containing the values from the x matrix
+#Dim2 is a column containing the values from the y matrix
+#sampleNames is a column that holds the column names from the x matrix, which happen to be the microarray wells.
+
+
+#add a plot title to this function!!!
+
+
+plot_MDS<-function(batch){
+  dim_data<- plotMDS(batch)
+  d<-data.frame(data.frame(Dim1 = dim_data$x, 
+               Dim2 = dim_data$y, 
+               sampleNames = names(dim_data$x)))
+  
+  d<-merge(d, pData, by = "sampleNames")
+  
+  ggplot(d, aes(x=Dim1, y = Dim2))+
+  geom_point(aes(color = Tissue), size = 3)
+  }
+
+```
+
+```{r norm plots}
+
+plotDensities(NTB_pax_PBMC_enroll,legend = FALSE, main = "Normalized PAXgene and PBMC, enrollment")
+
+boxplot(NTB_pax_PBMC_enroll,main = "Normalized PAXgene and PBMC, enrollment only")
+
+plot_MDS(NTB_pax_PBMC_enroll)
+
+```
+
+
+
+## Non-specific filtering
+
+I will filter out any probes that are not expressed above the 0.05 p-value cut-off in at least 6 samples.  I chose 6 because a probe may not be expressed at all in the 8 Enrollment samples (so 0/16 total), but may show up at Visit2 (8 possibilities). It would still be biologically interesting if a probe was expressed at Visit2 (and not at enrollment) even if it wasn't in all donors, so I'll require it to show up in at least 6 of them.
+
+```{r ns filtering}
+
+#count probes where det pval <0.05 in at least 7 samples
+#extract those probes from the batch
+
+find_expressed <-function(batch){
+  x <-rowSums(detection(batch)<0.05)>= 7
+  batch[x,]
+}
+
+
+
+px_PBMC_expressed<-find_expressed(NTB_pax_PBMC_enroll)
+
+
+```
+
+Number of probes removed from the data sets after filtering for expression. Started with 47323 probes.
+
+```{r probes pre and post filter}
+#here are the probes that were removed by NS filtering for each tissue
+probes_removed<- data.frame(
+"PAXgene and PBMC at enrollment" = nrow(fData(NTB_pax_PBMC_enroll))-nrow(fData(px_PBMC_expressed)))
+
+
+pander(probes_removed)
+```
+
+
+```{r design and fit function}
+
+
+#When I have ~0 for the intercept, each coeff represents the avg of the samples at each level of Condition and Donor. If I  use ~1 instead, the intercept would represent the avg of the samples for the first factor and the next coeff would represent the increase in the average of the next factor OVER the first. See here:https://support.bioconductor.org/p/67395/ and here https://support.bioconductor.org/p/12145/
+
+  
+Ptid <- pData(px_PBMC_expressed)$Ptid 
+
+Tissue <-  pData(px_PBMC_expressed)$Tissue
+
+
+pax_PBMC_enroll_design <- model.matrix(~0+Tissue + Ptid)
+
+pax_PBMC_enroll_fit<-lmFit(px_PBMC_expressed, design = pax_PBMC_enroll_design)
+
+
+#This means that the results will be relative to PBMC tissue
+pax_PBMC_enroll_contrasts<-makeContrasts(
+  PAXgeneEnrollVsPBMCEnroll = TissuePBMC-TissuePAXgene, levels = pax_PBMC_enroll_design)
+
+pax_PBMC_enroll_fit2 <- contrasts.fit(pax_PBMC_enroll_contrasts, fit = pax_PBMC_enroll_fit)
+
+pax_PBMC_enroll_fit2 <-eBayes(pax_PBMC_enroll_fit2)
+
+```
+
+
+```{r results summary function}
+
+#results summary function
+
+
+#method = separate is same as setting the limits for all coefs separately while "global" sets them all at once. I don't think this matters for me since I only have one contrast. I get the same answer if I used global or separate
+
+
+fit_results<- function(fit2){
+  results <- decideTests(fit2,method="global", adjust.method="BH",
+                      p.value=0.05, lfc=0.5)
+resultsDF<-as.data.frame(results)
+resultsDF$ProbeID<-rownames(resultsDF)
+rownames(resultsDF)<-NULL
+
+#melt the df for easy summarizing
+
+resultsDFmelt<-melt(resultsDF, id.vars="ProbeID")
+
+summary<-resultsDFmelt %>%
+  group_by(variable)%>%
+ summarize(down=sum(value=="-1"),up=sum(value=="1"))
+
+pander(summary)
+}
+  
+pax_PBMC_enroll_summary<-fit_results(pax_PBMC_enroll_fit2)
+```
+
+```{r toptable}
+
+tt_pax_PBMC_enroll <- topTable(pax_PBMC_enroll_fit2, coef = "PAXgeneEnrollVsPBMCEnroll", adjust.method = "BH", number = Inf, p.value = 0.05, lfc = 0.5 )
+
+pander(tt_pax_PBMC_enroll %>%
+         mutate(Direction = ifelse(logFC<0, "DOWN", "UP"))%>%
+         select (TargetID, Direction, DEFINITION, adj.P.Val)%>%
+         head(.))
+        
+```
