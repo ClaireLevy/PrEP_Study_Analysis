@@ -33,7 +33,7 @@ library(ggplot2)
 
 ```{r read in raw data, cache = TRUE, results = 'hide'}
 
-#note that the sampleNames are NOT syntactically valid, here (they have "-")
+
 lumibatch<-lumiR(fileName = "raw_data/2017.04.18.smhughesFinalReport.txt ",
             detectionTh = 0.05,
             annotationColumn=c('ENTREZ_GENE_ID','ACCESSION', 'SYMBOL', 'PROBE_SEQUENCE', 'PROBE_START', 'CHROMOSOME', 'PROBE_CHR_ORIENTATION', 'PROBE_COORDINATES', 'DEFINITION'))
@@ -204,8 +204,8 @@ plot_MDS_by_Visit(px_norm_batch)
 
 
 ## Non-specific filtering
-
-I will filter out any probes that are not expressed above the 0.05 p-value cut-off in at least 6 samples.  I chose 6 because a probe may not be expressed at all in the 8 Enrollment samples (so 0/16 total), but may show up at Visit2 (8 possibilities). It would still be biologically interesting if a probe was expressed at Visit2 (and not at enrollment) even if it wasn't in all donors, so I'll require it to show up in at least 6 of them.
+There are  8 donors x 1 tissue type x 2 timepoints = 16 samples in this set.
+I will filter out any probes that are not expressed above the 0.05 p-value cut-off in at least 7 samples.  I chose 7 because a probe may not be expressed at all in the 8 Enrollment samples (so 0/16 total), but may show up at Visit2 (8 possibilities). It would still be biologically interesting if a probe was expressed at Visit2 (and not at enrollment) even if it wasn't in all donors, so I'll require it to show up in at least 7 of them.
 
 ```{r ns filtering}
 
@@ -256,7 +256,7 @@ Ptid <- pData(expressedProbes)$Ptid #get pData just for that tissue
 
 Visit <-  pData(expressedProbes)$Visit
 
-design <- model.matrix(~0+ Visit + Ptid)
+design <- model.matrix(~0 + Visit + Ptid)
 
 fit<-lmFit(expressedProbes, design = design)
 
@@ -319,7 +319,7 @@ px_summary<-fit_results(px_fit2)
 The Duodenal samples were the only ones with any differentially expressed probes. There were 70 downregulated probes and 11 upregulated probes.
 
 
-## Changes in the Duodenum pre vs post-prEP: logFC cutoff = 0.5, p-value cut-off = 0.05
+## Changes in the Duodenum pre vs post-PreP: logFC cutoff = 0.5, p-value cut-off = 0.05
 
 ```{r toptable}
 
@@ -443,7 +443,7 @@ camera_results(camera_function(px_expressed, Hs.H))
 Sean wrote some code (https://github.com/seaaan/Bioinformatics/tree/master/GOTermMappingsForCamera) to extract just the Biological Process gene sets out of all the GO gene sets. 
 
 
-####Duodenal sample Results
+####Duodenal sample results
 ```{r }
 
 load("geneSets_for_CAMERA/Hs.c5.BP.rdata")
@@ -454,7 +454,7 @@ camera_results(camera_function(duod_expressed, Hs.c5.BP))
 ```
 
 
-####Rectal sample Results
+####Rectal sample results
 ```{r }
 
 #I want to use the "Hs.c5.BP"  genesets
@@ -505,7 +505,7 @@ pander(mtn_007)
 ```
 
 
-##Which DE probes from the PrEP study overlap with those from MTN-007?
+##Which DE probes from the PreP study overlap with those from MTN-007?
 
 ```{r mtn007 overlaps}
 
@@ -544,7 +544,7 @@ inf_a_founders_set<-geneIds(inf_a_founders_entrez)
 
 ```
 
-####Duodenal sample Results
+####Duodenal sample results
 ```{r test inf alpha}
 
 camera_results(camera_function(duod_expressed, inf_a_founders_set))
@@ -552,7 +552,7 @@ camera_results(camera_function(duod_expressed, inf_a_founders_set))
 ```
 
 
-####Rectal sample Results
+####Rectal sample results
 ```{r }
 camera_results(camera_function(rec_expressed, inf_a_founders_set))
 ```

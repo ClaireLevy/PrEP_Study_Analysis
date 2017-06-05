@@ -27,7 +27,7 @@ These normalized samples all look good.
 Non-specific filtering
 ----------------------
 
-I will filter out any probes that are not expressed above the 0.05 p-value cut-off in at least 6 samples. I chose 6 because a probe may not be expressed at all in the 8 Enrollment samples (so 0/16 total), but may show up at Visit2 (8 possibilities). It would still be biologically interesting if a probe was expressed at Visit2 (and not at enrollment) even if it wasn't in all donors, so I'll require it to show up in at least 6 of them.
+There are 8 donors x 1 tissue type x 2 timepoints = 16 samples in this set. I will filter out any probes that are not expressed above the 0.05 p-value cut-off in at least 7 samples. I chose 7 because a probe may not be expressed at all in the 8 Enrollment samples (so 0/16 total), but may show up at Visit2 (8 possibilities). It would still be biologically interesting if a probe was expressed at Visit2 (and not at enrollment) even if it wasn't in all donors, so I'll require it to show up in at least 7 of them.
 
 Number of probes removed from the data sets after filtering for expression. All started with 47323 probes.
 
@@ -61,7 +61,7 @@ Number of DE probes for each contrast
 
 The Duodenal samples were the only ones with any differentially expressed probes. There were 70 downregulated probes and 11 upregulated probes.
 
-Changes in the Duodenum pre vs post-prEP: logFC cutoff = 0.5, p-value cut-off = 0.05
+Changes in the Duodenum pre vs post-PreP: logFC cutoff = 0.5, p-value cut-off = 0.05
 ------------------------------------------------------------------------------------
 
 <table>
@@ -906,7 +906,7 @@ From the CAMERA documentation:
 
 Sean wrote some code (<https://github.com/seaaan/Bioinformatics/tree/master/GOTermMappingsForCamera>) to extract just the Biological Process gene sets out of all the GO gene sets.
 
-#### Duodenal sample Results
+#### Duodenal sample results
 
 <table style="width:88%;">
 <colgroup>
@@ -987,7 +987,7 @@ Sean wrote some code (<https://github.com/seaaan/Bioinformatics/tree/master/GOTe
 </tbody>
 </table>
 
-#### Rectal sample Results
+#### Rectal sample results
 
 <table style="width:85%;">
 <colgroup>
@@ -1311,7 +1311,7 @@ Here I am comparing the probes in this experiment to significantly differentiall
 </tbody>
 </table>
 
-Which DE probes from the PrEP study overlap with those from MTN-007?
+Which DE probes from the PreP study overlap with those from MTN-007?
 --------------------------------------------------------------------
 
 <table style="width:86%;">
@@ -1360,7 +1360,7 @@ Which DE probes from the PrEP study overlap with those from MTN-007?
 CAMERA test of Hallmark interferon alpha geneset founder sets
 -------------------------------------------------------------
 
-#### Duodenal sample Results
+#### Duodenal sample results
 
 <table style="width:88%;">
 <colgroup>
@@ -1441,7 +1441,7 @@ CAMERA test of Hallmark interferon alpha geneset founder sets
 </tbody>
 </table>
 
-#### Rectal sample Results
+#### Rectal sample results
 
 <table style="width:85%;">
 <colgroup>
