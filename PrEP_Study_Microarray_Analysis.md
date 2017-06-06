@@ -59,7 +59,7 @@ Number of probes removed from the data sets after filtering for expression. All 
 Number of DE probes for each contrast
 -------------------------------------
 
-The Duodenal samples were the only ones with any differentially expressed probes. There were 70 downregulated probes and 11 upregulated probes.
+The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were 70 down-regulated probes and 11 up-regulated probes.
 
 Changes in the Duodenum pre vs post-PreP: logFC cutoff = 0.5, p-value cut-off = 0.05
 ------------------------------------------------------------------------------------
