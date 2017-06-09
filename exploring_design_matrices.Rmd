@@ -1,0 +1,164 @@
+---
+title: "Exploring design matrices"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+
+library(dplyr)
+library(lumi)
+library(limma)
+library(pander)
+library(stringr)
+library(reshape2)
+library(ggplot2)
+
+load("R_output/duod_expressed.Rdata")
+```
+
+There are 8 Ptids and 2 Visits per Ptid (Enrollment and Visit2)
+
+Here is what the design matrix looks like for the design with no interecept,
+
+~0 + Visit + Ptid
+
+Why are there only 7 Ptids shown? 
+I think because the first level of each parameter is absorbed into the intercept and the because I am using an additive model, the coefficients for the Visits are assuming that the effect is the same for all patients. See here: According to http://genomicsclass.github.io/book/pages/expressing_design_formula.html, and replace "Visit" with "Diet" and "Ptid" for "Sex"
+
+Rows 15 and 16 have zeros in all columns except for the first two, which I assume means that they are representing the average of the expression for all Ptids for those visits??
+
+
+Because there is information on both Visits and I want to compare the average results from the two visits, I will make a contrasts matrix:
+
+contrasts <- makeContrasts(Visit2vsEnrollment = VisitVisit2-VisitEnrollment, levels = no_int_design)
+  
+  
+and then fit the model to the contrast matrix.
+```{r no intercept}
+
+Ptid <- factor(pData(duod_expressed)$Ptid) # 2 reps of each Ptid because 2 visits
+
+Visit <-  factor(pData(duod_expressed)$Visit) # 2 Visits per Ptid
+
+no_int_design <- model.matrix(~0+Visit + Ptid)
+
+no_int_fit<-lmFit(duod_expressed, design = no_int_design)
+
+contrasts <- makeContrasts(
+  Visit2vsEnrollment = VisitVisit2-VisitEnrollment, levels = no_int_design)
+
+no_int_fit2 <- contrasts.fit(contrasts, fit = no_int_fit)
+
+no_int_fit2<-eBayes(no_int_fit2)
+
+
+no_int_design
+
+
+fit_results_sep<- function(fit2){
+  results <- decideTests(fit2,method="separate", adjust.method="BH",
+                      p.value=0.05, lfc=0.5)
+resultsDF<-as.data.frame(results)
+resultsDF$ProbeID<-rownames(resultsDF)
+rownames(resultsDF)<-NULL
+
+#melt the df for easy summarizing
+
+resultsDFmelt<-melt(resultsDF, id.vars="ProbeID")
+
+summary<-resultsDFmelt %>%
+  group_by(variable)%>%
+ summarize(down=sum(value=="-1"),up=sum(value=="1"))
+
+pander(summary)
+}
+
+
+
+fit_results_glob<- function(fit2){
+  results <- decideTests(fit2,method="global", adjust.method="BH",
+                      p.value=0.05, lfc=0.5)
+resultsDF<-as.data.frame(results)
+resultsDF$ProbeID<-rownames(resultsDF)
+rownames(resultsDF)<-NULL
+
+#melt the df for easy summarizing
+
+resultsDFmelt<-melt(resultsDF, id.vars="ProbeID")
+
+summary<-resultsDFmelt %>%
+  group_by(variable)%>%
+ summarize(down=sum(value=="-1"),up=sum(value=="1"))
+
+pander(summary)
+}
+```
+
+
+There are 8 Ptids and 2 Visits per Ptid (Enrollment and Visit2)
+
+Here is what the design matrix looks like for the design *with* intercept, 
+ ~Visit + Ptid
+
+
+I think the intercept here represents the average of Enrollment and the coefficent "VisitVisit2" represents the increase in the average of Visit2 *over* Enrollment. Because this comparison is already made with this design, I don't need to do a contrast matrix. 
+
+```{r  with intercept}
+
+Ptid <- factor(pData(duod_expressed)$Ptid) # 2 reps of each Ptid because 2 visits
+
+Visit <-  factor(pData(duod_expressed)$Visit) # 2 Visits per Ptid
+
+int_design <- model.matrix(~1 + Visit + Ptid)
+
+int_fit<-lmFit(duod_expressed, design = int_design)
+
+
+int_fit2<-eBayes(int_fit)
+
+
+int_design
+
+```
+
+Here are results from fitting the model using decideTests(method = "global") vs decideTests(method = "separate") for the design *without* an intercept.
+
+```{r decide tests no int}
+fit_results_sep(no_int_fit2)
+fit_results_glob(no_int_fit2)
+
+```
+
+
+
+Here are results from fitting the model using decideTests(method = "global") vs decideTests(method = "separate") for the design *with* an intercept.
+
+```{r decide tests int}
+fit_results_sep(int_fit2)
+fit_results_glob(int_fit2)
+
+```
+
+
+
+```{r limma example}
+
+#following section 9.4.1 in the limma guide
+
+# targets<-data.frame("FileName" = c("File1", "File2","File3", "File4","File5","File6"), "SibShip" = c(1,1,2,2,3,3), "Treatment" = c("C","T", "C","T","C","T"))
+# SibShip <- factor(targets$SibShip)
+# Treat <- factor(targets$Treatment, levels=c("C","T"))
+# design <- model.matrix(~SibShip+Treat)
+# 
+# 
+# 
+# #this is an example from the edgeR guide
+# targets2<-data.frame("FileName" = c("File1", "File2","File3", "File4","File5","File6","File7", "File8", "File9"), "Litter" = c("1","1","1","2","2","2",'3','3',"3"), "Treatment" = c("A","B","C","B","A","C","C","B","A"))
+# 
+# Litter <- factor(targets2$Litter)
+# 
+# Treatment <- factor(targets2$Treatment)
+# 
+# design2 <- model.matrix(~Litter + Treatment)
+```
