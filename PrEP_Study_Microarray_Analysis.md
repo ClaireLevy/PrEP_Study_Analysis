@@ -16,7 +16,7 @@ Sample Types
 
 NOTE: PTID BG2305 may not have been adherent, left them in for now. May have had problems refilling prescription on time.
 
-Plots of non-normalized data
+### Plots of background-corrected but non-normalized data
 
 ![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/nonnormalized%20data-1.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/nonnormalized%20data-2.png)![](PrEP_Study_Microarray_Analysis_files/figure-markdown_github/nonnormalized%20data-3.png)
 

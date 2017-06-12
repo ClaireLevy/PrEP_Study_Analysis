@@ -61,14 +61,23 @@ complete_lumibatch<-new("LumiBatch",
 ```
 
 
+```{r background correction, results = 'hide'}
 
-Plots of non-normalized data
+#the data we got from the core has no background correction (I don't think it did anyway...) so I will do it here.
+
+
+B_complete_lumibatch<-lumiB(complete_lumibatch, method = "bgAdjust")
+
+```
+
+
+### Plots of background-corrected but non-normalized data
 
 ```{r nonnormalized data}
 
 #MDS
 
-dim_data<- plotMDS(complete_lumibatch)
+dim_data<- plotMDS(B_complete_lumibatch)
   d<-data.frame(data.frame(Dim1 = dim_data$x, 
                Dim2 = dim_data$y, 
                sampleNames = names(dim_data$x)))
@@ -78,28 +87,15 @@ dim_data<- plotMDS(complete_lumibatch)
   ggplot(d, aes(x=Dim1, y = Dim2))+
   geom_point(aes(color = Tissue), size = 3)
 
-
-
-
-
-
 #A numerical vector of the form c(bottom, left, top, right) which gives the number of lines of margin to be specified on the four sides of the plot. The default is c(5, 4, 4, 2) + 0.1.
 
 par(cex= 0.7, mar = c(10,10,10,10))
-boxplot(complete_lumibatch, col = c("#1b9e77","#80cdc1","#984ea3","#e7298a"))
+boxplot(B_complete_lumibatch, col = c("#1b9e77","#80cdc1","#984ea3","#e7298a"))
 
 #Ryan Basom looked at this box plot with me and we talked about how it shows that the paxgene samples almost always have low expression and the IQR is smaller. If I normalize all samples together, apparently non-random variation might cause problems. RB's recommendation was to normalize and analyze the tissues separately. 
 ```
 
 
-```{r background correction, results = 'hide'}
-
-#the data we got from the core has no background correction (I don't think it did anyway...) so I will do it here.
-
-
-B_complete_lumibatch<-lumiB(complete_lumibatch, method = "bgAdjust")
-
-```
 
 ```{r split up data into tissue types}
 
@@ -137,7 +133,6 @@ px_norm_batch<-lumiN(px_trans_batch, method = "rsn")
 ```
 
 These normalized samples all look good.
-
 
 
 ```{r MDS plot function}
@@ -282,11 +277,15 @@ px_fit2<-fit_model(px_expressed)
 #results summary function
 
 
-#method = separate is same as setting the limits for all coefs separately while "global" sets them all at once. I don't think this matters for me since I only have one contrast. I get the same answer if I used global or separate
+#SEE LIMMA DOCUMENTATION SECTION 13.3 for explaination of which method to use for decideTests function (adjust results for multiple testing).  
+#In short, method = "separate" means that testing contrasts to gether will give the same results as when each contrast is tested alone. Does NOT do any adjusting betweeen contrasts and the raw p-value cutoff corresponding to significance can be different for different contrasts. Use when different contrasts are being analyzed to answer independant questions. Gives the same results as when you do topTable. 
 
+#use method = "global" when closely related contrasts are being tested and is recommended if you want to compare the number of DE genes found for different contrasts. All tests are treated as equivalent regardless of which probe or contrast they relate to, so raw p-value cutoff is consistant across contrasts. I guess you won't necessarily get the same numbers of DE probes when you do topTable after using method = "global"??
+
+#here I'm using a contrast matrix with only one coeff, so it doesn't make a difference if I use separate or global. Also limma says you should avoid unnessary contrasts...
 
 fit_results<- function(fit2){
-  results <- decideTests(fit2,method="global", adjust.method="BH",
+  results <- decideTests(fit2,method="separate", adjust.method="BH",
                       p.value=0.05, lfc=0.5)
 resultsDF<-as.data.frame(results)
 resultsDF$ProbeID<-rownames(resultsDF)
