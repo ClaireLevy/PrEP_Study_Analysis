@@ -59,22 +59,22 @@ Number of probes removed from the data sets after filtering for expression. All 
 Number of DE probes for each contrast
 -------------------------------------
 
-The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were 70 down-regulated probes and 11 up-regulated probes.
+The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were 152 down-regulated probes and 120 up-regulated probes.
 
-Changes in the Duodenum pre vs post-PreP: logFC cutoff = 0.5, p-value cut-off = 0.05
-------------------------------------------------------------------------------------
+Changes in the Duodenum pre vs post-PreP: p-value cut-off = 0.05
+----------------------------------------------------------------
 
-<table>
+<table style="width:85%;">
 <colgroup>
-<col width="17%" />
 <col width="15%" />
-<col width="52%" />
-<col width="14%" />
+<col width="11%" />
+<col width="43%" />
+<col width="15%" />
 </colgroup>
 <thead>
 <tr class="header">
 <th align="center">TargetID</th>
-<th align="center">Direction</th>
+<th align="center">logFC</th>
 <th align="center">DEFINITION</th>
 <th align="center">adj.P.Val</th>
 </tr>
@@ -82,489 +82,63 @@ Changes in the Duodenum pre vs post-PreP: logFC cutoff = 0.5, p-value cut-off = 
 <tbody>
 <tr class="odd">
 <td align="center">GK</td>
-<td align="center">DOWN</td>
+<td align="center">-0.7041</td>
 <td align="center">Homo sapiens glycerol kinase (GK), transcript variant 2, mRNA.</td>
 <td align="center">0.007008</td>
 </tr>
 <tr class="even">
 <td align="center">LCT</td>
-<td align="center">DOWN</td>
+<td align="center">-1.182</td>
 <td align="center">Homo sapiens lactase (LCT), mRNA.</td>
 <td align="center">0.007008</td>
 </tr>
 <tr class="odd">
 <td align="center">GK</td>
-<td align="center">DOWN</td>
+<td align="center">-0.6262</td>
 <td align="center">Homo sapiens glycerol kinase (GK), transcript variant 1, mRNA.</td>
 <td align="center">0.007008</td>
 </tr>
 <tr class="even">
 <td align="center">DFNA5</td>
-<td align="center">DOWN</td>
+<td align="center">-0.8681</td>
 <td align="center">Homo sapiens deafness, autosomal dominant 5 (DFNA5), transcript variant 1, mRNA.</td>
 <td align="center">0.007008</td>
 </tr>
 <tr class="odd">
 <td align="center">LAMA3</td>
-<td align="center">DOWN</td>
+<td align="center">-0.6491</td>
 <td align="center">Homo sapiens laminin, alpha 3 (LAMA3), transcript variant 1, mRNA.</td>
 <td align="center">0.007008</td>
 </tr>
 <tr class="even">
+<td align="center">BTNL3</td>
+<td align="center">-0.4034</td>
+<td align="center">Homo sapiens butyrophilin-like 3 (BTNL3), mRNA.</td>
+<td align="center">0.007008</td>
+</tr>
+<tr class="odd">
 <td align="center">MGC13057</td>
-<td align="center">DOWN</td>
+<td align="center">-0.6181</td>
 <td align="center">Homo sapiens hypothetical protein MGC13057 (MGC13057), mRNA.</td>
 <td align="center">0.007008</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">AQP10</td>
-<td align="center">DOWN</td>
+<td align="center">-1.664</td>
 <td align="center">Homo sapiens aquaporin 10 (AQP10), mRNA.</td>
 <td align="center">0.0131</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="center">KIAA1671</td>
-<td align="center">DOWN</td>
+<td align="center">-0.5056</td>
 <td align="center">PREDICTED: Homo sapiens KIAA1671 protein (KIAA1671), mRNA.</td>
 <td align="center">0.01454</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="center">SLC36A1</td>
-<td align="center">DOWN</td>
+<td align="center">-0.5032</td>
 <td align="center">Homo sapiens solute carrier family 36 (proton/amino acid symporter), member 1 (SLC36A1), mRNA.</td>
 <td align="center">0.01454</td>
-</tr>
-<tr class="even">
-<td align="center">UGT2B11</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens UDP glucuronosyltransferase 2 family, polypeptide B11 (UGT2B11), mRNA.</td>
-<td align="center">0.01959</td>
-</tr>
-<tr class="odd">
-<td align="center">TREH</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens trehalase (brush-border membrane glycoprotein) (TREH), mRNA.</td>
-<td align="center">0.01999</td>
-</tr>
-<tr class="even">
-<td align="center">LOC653117</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens similar to B7h.4 (LOC653117), mRNA.</td>
-<td align="center">0.01999</td>
-</tr>
-<tr class="odd">
-<td align="center">S100G</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens S100 calcium binding protein G (S100G), mRNA.</td>
-<td align="center">0.01999</td>
-</tr>
-<tr class="even">
-<td align="center">PPP1R1B</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens protein phosphatase 1, regulatory (inhibitor) subunit 1B (dopamine and cAMP regulated phosphoprotein, DARPP-32) (PPP1R1B), transcript variant 2, mRNA.</td>
-<td align="center">0.01999</td>
-</tr>
-<tr class="odd">
-<td align="center">SERPINA1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens serpin peptidase inhibitor, clade A (alpha-1 antiproteinase, antitrypsin), member 1 (SERPINA1), transcript variant 3, mRNA.</td>
-<td align="center">0.01999</td>
-</tr>
-<tr class="even">
-<td align="center">SERPINA1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens serpin peptidase inhibitor, clade A (alpha-1 antiproteinase, antitrypsin), member 1 (SERPINA1), transcript variant 2, mRNA.</td>
-<td align="center">0.02058</td>
-</tr>
-<tr class="odd">
-<td align="center">MUPCDH</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens mucin-like protocadherin (MUPCDH), transcript variant 1, mRNA.</td>
-<td align="center">0.02058</td>
-</tr>
-<tr class="even">
-<td align="center">CD36</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens CD36 molecule (thrombospondin receptor) (CD36), transcript variant 3, mRNA.</td>
-<td align="center">0.02058</td>
-</tr>
-<tr class="odd">
-<td align="center">ENPP7</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens ectonucleotide pyrophosphatase/phosphodiesterase 7 (ENPP7), mRNA.</td>
-<td align="center">0.02159</td>
-</tr>
-<tr class="even">
-<td align="center">ABHD5</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens abhydrolase domain containing 5 (ABHD5), mRNA.</td>
-<td align="center">0.02206</td>
-</tr>
-<tr class="odd">
-<td align="center">EDN3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 3, mRNA.</td>
-<td align="center">0.02283</td>
-</tr>
-<tr class="even">
-<td align="center">LOC653381</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens similar to Sorbitol dehydrogenase (L-iditol 2-dehydrogenase) (LOC653381), mRNA.</td>
-<td align="center">0.02283</td>
-</tr>
-<tr class="odd">
-<td align="center">SORD</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens sorbitol dehydrogenase (SORD), mRNA.</td>
-<td align="center">0.0244</td>
-</tr>
-<tr class="even">
-<td align="center">BTNL8</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens butyrophilin-like 8 (BTNL8), transcript variant 1, mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="odd">
-<td align="center">SEPP1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens selenoprotein P, plasma, 1 (SEPP1), transcript variant 1, mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="even">
-<td align="center">AQP7P2</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens aquaporin 7 pseudogene 2 (AQP7P2), non-coding RNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="odd">
-<td align="center">SHBG</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens sex hormone-binding globulin (SHBG), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="even">
-<td align="center">PCK1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens phosphoenolpyruvate carboxykinase 1 (soluble) (PCK1), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="odd">
-<td align="center">MST1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens macrophage stimulating 1 (hepatocyte growth factor-like) (MST1), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="even">
-<td align="center">RIOK3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens RIO kinase 3 (yeast) (RIOK3), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="odd">
-<td align="center">LCT</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens lactase (LCT), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="even">
-<td align="center">HIST2H2BE</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens histone cluster 2, H2be (HIST2H2BE), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="odd">
-<td align="center">GOLPH4</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens golgi phosphoprotein 4 (GOLPH4), mRNA.</td>
-<td align="center">0.03037</td>
-</tr>
-<tr class="even">
-<td align="center">ENPP7</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens ectonucleotide pyrophosphatase/phosphodiesterase 7 (ENPP7), mRNA.</td>
-<td align="center">0.03085</td>
-</tr>
-<tr class="odd">
-<td align="center">SCG5</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens secretogranin V (7B2 protein) (SCG5), mRNA.</td>
-<td align="center">0.03105</td>
-</tr>
-<tr class="even">
-<td align="center">LAMA3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens laminin, alpha 3 (LAMA3), transcript variant 1, mRNA.</td>
-<td align="center">0.03105</td>
-</tr>
-<tr class="odd">
-<td align="center">ASAH2</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens N-acylsphingosine amidohydrolase (non-lysosomal ceramidase) 2 (ASAH2), mRNA.</td>
-<td align="center">0.03105</td>
-</tr>
-<tr class="even">
-<td align="center">AQP11</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens aquaporin 11 (AQP11), mRNA.</td>
-<td align="center">0.03164</td>
-</tr>
-<tr class="odd">
-<td align="center">PROM2</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens prominin 2 (PROM2), mRNA.</td>
-<td align="center">0.03164</td>
-</tr>
-<tr class="even">
-<td align="center">AKR7A3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens aldo-keto reductase family 7, member A3 (aflatoxin aldehyde reductase) (AKR7A3), mRNA.</td>
-<td align="center">0.03348</td>
-</tr>
-<tr class="odd">
-<td align="center">TM4SF20</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens transmembrane 4 L six family member 20 (TM4SF20), mRNA.</td>
-<td align="center">0.03405</td>
-</tr>
-<tr class="even">
-<td align="center">BEND7</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens BEN domain containing 7 (BEND7), transcript variant 2, mRNA.</td>
-<td align="center">0.03405</td>
-</tr>
-<tr class="odd">
-<td align="center">ASAH2</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens N-acylsphingosine amidohydrolase (non-lysosomal ceramidase) 2 (ASAH2), mRNA.</td>
-<td align="center">0.03421</td>
-</tr>
-<tr class="even">
-<td align="center">SPDEF</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens SAM pointed domain containing ets transcription factor (SPDEF), mRNA.</td>
-<td align="center">0.03421</td>
-</tr>
-<tr class="odd">
-<td align="center">CEACAM1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens carcinoembryonic antigen-related cell adhesion molecule 1 (biliary glycoprotein) (CEACAM1), transcript variant 1, mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="even">
-<td align="center">LOC653308</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens similar to N-acylsphingosine amidohydrolase 2, transcript variant 1 (LOC653308), mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="odd">
-<td align="center">RIOK3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens RIO kinase 3 (yeast) (RIOK3), transcript variant 1, mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="even">
-<td align="center">CHN2</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens chimerin (chimaerin) 2 (CHN2), transcript variant 2, mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="odd">
-<td align="center">CD36</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens CD36 molecule (thrombospondin receptor) (CD36), transcript variant 1, mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="even">
-<td align="center">HLA-DRA</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens major histocompatibility complex, class II, DR alpha (HLA-DRA), mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="odd">
-<td align="center">SLC2A12</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens solute carrier family 2 (facilitated glucose transporter), member 12 (SLC2A12), mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="even">
-<td align="center">HNF4G</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens hepatocyte nuclear factor 4, gamma (HNF4G), mRNA.</td>
-<td align="center">0.03431</td>
-</tr>
-<tr class="odd">
-<td align="center">SORD</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens sorbitol dehydrogenase (SORD), mRNA.</td>
-<td align="center">0.0348</td>
-</tr>
-<tr class="even">
-<td align="center">SORD</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens sorbitol dehydrogenase (SORD), mRNA.</td>
-<td align="center">0.03619</td>
-</tr>
-<tr class="odd">
-<td align="center">SLC23A1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens solute carrier family 23 (nucleobase transporters), member 1 (SLC23A1), transcript variant 1, mRNA.</td>
-<td align="center">0.03619</td>
-</tr>
-<tr class="even">
-<td align="center">SLC46A1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens solute carrier family 46 (folate transporter), member 1 (SLC46A1), mRNA.</td>
-<td align="center">0.03619</td>
-</tr>
-<tr class="odd">
-<td align="center">HLA-DRB6</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens major histocompatibility complex, class II, DR beta 6 (pseudogene) (HLA-DRB6), non-coding RNA.</td>
-<td align="center">0.03695</td>
-</tr>
-<tr class="even">
-<td align="center">IL32</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens interleukin 32 (IL32), transcript variant 7, mRNA.</td>
-<td align="center">0.03736</td>
-</tr>
-<tr class="odd">
-<td align="center">LAMB3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens laminin, beta 3 (LAMB3), transcript variant 1, mRNA.</td>
-<td align="center">0.038</td>
-</tr>
-<tr class="even">
-<td align="center">C12ORF35</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens chromosome 12 open reading frame 35 (C12orf35), mRNA.</td>
-<td align="center">0.038</td>
-</tr>
-<tr class="odd">
-<td align="center">CPA2</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens carboxypeptidase A2 (pancreatic) (CPA2), mRNA.</td>
-<td align="center">0.03936</td>
-</tr>
-<tr class="even">
-<td align="center">FLJ22675</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens hypothetical gene supported by AK026328 (FLJ22675), mRNA.</td>
-<td align="center">0.04012</td>
-</tr>
-<tr class="odd">
-<td align="center">LY6E</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens lymphocyte antigen 6 complex, locus E (LY6E), mRNA.</td>
-<td align="center">0.04012</td>
-</tr>
-<tr class="even">
-<td align="center">IFI27L1</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens interferon, alpha-inducible protein 27-like 1 (IFI27L1), transcript variant 1, mRNA.</td>
-<td align="center">0.04012</td>
-</tr>
-<tr class="odd">
-<td align="center">HSH2D</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens hematopoietic SH2 domain containing (HSH2D), mRNA.</td>
-<td align="center">0.04012</td>
-</tr>
-<tr class="even">
-<td align="center">EDN3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 2, mRNA.</td>
-<td align="center">0.04101</td>
-</tr>
-<tr class="odd">
-<td align="center">PLA2G4C</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens phospholipase A2, group IVC (cytosolic, calcium-independent) (PLA2G4C), mRNA.</td>
-<td align="center">0.04199</td>
-</tr>
-<tr class="even">
-<td align="center">C8G</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens complement component 8, gamma polypeptide (C8G), mRNA.</td>
-<td align="center">0.04242</td>
-</tr>
-<tr class="odd">
-<td align="center">FOXQ1</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens forkhead box Q1 (FOXQ1), mRNA.</td>
-<td align="center">0.04242</td>
-</tr>
-<tr class="even">
-<td align="center">HMOX1</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens heme oxygenase (decycling) 1 (HMOX1), mRNA.</td>
-<td align="center">0.04242</td>
-</tr>
-<tr class="odd">
-<td align="center">ENPP3</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens ectonucleotide pyrophosphatase/phosphodiesterase 3 (ENPP3), mRNA.</td>
-<td align="center">0.04286</td>
-</tr>
-<tr class="even">
-<td align="center">LOC100133583</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens similar to major histocompatibility complex, class II, DQ beta 1, transcript variant 2 (LOC100133583), mRNA.</td>
-<td align="center">0.04386</td>
-</tr>
-<tr class="odd">
-<td align="center">SUSD2</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens sushi domain containing 2 (SUSD2), mRNA.</td>
-<td align="center">0.04386</td>
-</tr>
-<tr class="even">
-<td align="center">OBFC2A</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens oligonucleotide/oligosaccharide-binding fold containing 2A (OBFC2A), mRNA.</td>
-<td align="center">0.04388</td>
-</tr>
-<tr class="odd">
-<td align="center">ASAH2</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens N-acylsphingosine amidohydrolase (non-lysosomal ceramidase) 2 (ASAH2), mRNA.</td>
-<td align="center">0.04388</td>
-</tr>
-<tr class="even">
-<td align="center">SLC7A7</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens solute carrier family 7 (cationic amino acid transporter, y+ system), member 7 (SLC7A7), mRNA.</td>
-<td align="center">0.04433</td>
-</tr>
-<tr class="odd">
-<td align="center">IGFBP2</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens insulin-like growth factor binding protein 2, 36kDa (IGFBP2), mRNA.</td>
-<td align="center">0.04433</td>
-</tr>
-<tr class="even">
-<td align="center">GUCA2B</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens guanylate cyclase activator 2B (uroguanylin) (GUCA2B), mRNA.</td>
-<td align="center">0.04677</td>
-</tr>
-<tr class="odd">
-<td align="center">LOC642073</td>
-<td align="center">DOWN</td>
-<td align="center">PREDICTED: Homo sapiens similar to MHC class II antigen (LOC642073), mRNA.</td>
-<td align="center">0.04682</td>
-</tr>
-<tr class="even">
-<td align="center">IL32</td>
-<td align="center">DOWN</td>
-<td align="center">Homo sapiens interleukin 32 (IL32), transcript variant 4, mRNA.</td>
-<td align="center">0.04688</td>
-</tr>
-<tr class="odd">
-<td align="center">IGFBP5</td>
-<td align="center">UP</td>
-<td align="center">Homo sapiens insulin-like growth factor binding protein 5 (IGFBP5), mRNA.</td>
-<td align="center">0.04706</td>
 </tr>
 </tbody>
 </table>
@@ -1314,11 +888,11 @@ Here I am comparing the probes in this experiment to significantly differentiall
 Which DE probes from the PreP study overlap with those from MTN-007?
 --------------------------------------------------------------------
 
-<table style="width:86%;">
+<table style="width:82%;">
 <colgroup>
-<col width="19%" />
+<col width="13%" />
 <col width="15%" />
-<col width="41%" />
+<col width="43%" />
 <col width="9%" />
 </colgroup>
 <thead>
@@ -1331,25 +905,49 @@ Which DE probes from the PreP study overlap with those from MTN-007?
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>3850328</strong></td>
+<td align="center"><strong>30</strong></td>
 <td align="center">MUPCDH</td>
 <td align="center">Homo sapiens mucin-like protocadherin (MUPCDH), transcript variant 1, mRNA.</td>
 <td align="center">-0.5277</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>670333</strong></td>
+<td align="center"><strong>38</strong></td>
 <td align="center">EDN3</td>
 <td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 3, mRNA.</td>
 <td align="center">-0.6583</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>5870221</strong></td>
+<td align="center"><strong>64</strong></td>
 <td align="center">GOLPH4</td>
 <td align="center">Homo sapiens golgi phosphoprotein 4 (GOLPH4), mRNA.</td>
 <td align="center">-0.5256</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>1410240</strong></td>
+<td align="center"><strong>85</strong></td>
+<td align="center">FAM23A</td>
+<td align="center">Homo sapiens family with sequence similarity 23, member A (FAM23A), mRNA.</td>
+<td align="center">-0.276</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>150</strong></td>
+<td align="center">PTGDS</td>
+<td align="center">Homo sapiens prostaglandin D2 synthase 21kDa (brain) (PTGDS), mRNA.</td>
+<td align="center">0.4569</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>161</strong></td>
+<td align="center">NUSAP1</td>
+<td align="center">Homo sapiens nucleolar and spindle associated protein 1 (NUSAP1), transcript variant 2, mRNA.</td>
+<td align="center">0.4414</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>166</strong></td>
+<td align="center">TOP2A</td>
+<td align="center">Homo sapiens topoisomerase (DNA) II alpha 170kDa (TOP2A), mRNA.</td>
+<td align="center">0.4312</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>190</strong></td>
 <td align="center">EDN3</td>
 <td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 2, mRNA.</td>
 <td align="center">-0.5274</td>

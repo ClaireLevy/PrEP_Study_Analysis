@@ -284,9 +284,11 @@ px_fit2<-fit_model(px_expressed)
 
 #here I'm using a contrast matrix with only one coeff, so it doesn't make a difference if I use separate or global. Also limma says you should avoid unnessary contrasts...
 
+# It says here, https://support.bioconductor.org/p/66818/#66831, and in the limma guide apparently, that you should only have  pval cutoff in decideTests(), not both pval AND lfc
+
 fit_results<- function(fit2){
   results <- decideTests(fit2,method="separate", adjust.method="BH",
-                      p.value=0.05, lfc=0.5)
+                      p.value=0.05)
 resultsDF<-as.data.frame(results)
 resultsDF$ProbeID<-rownames(resultsDF)
 rownames(resultsDF)<-NULL
@@ -299,7 +301,6 @@ summary<-resultsDFmelt %>%
   group_by(variable)%>%
  summarize(down=sum(value=="-1"),up=sum(value=="1"))
 
-pander(summary)
 }
   
 #summarise each tissue
@@ -309,23 +310,32 @@ rec_summary<-fit_results(rec_fit2)
 pb_summary<-fit_results(pb_fit2)
 px_summary<-fit_results(px_fit2)
 
- 
 ```
 
 ##Number of DE probes for each contrast
 
-The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were 70 down-regulated probes and 11 up-regulated probes.
+The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were `r duod_summary$down` down-regulated probes and `r duod_summary$up` up-regulated probes.
 
 
-## Changes in the Duodenum pre vs post-PreP: logFC cutoff = 0.5, p-value cut-off = 0.05
+## Changes in the Duodenum pre vs post-PreP: p-value cut-off = 0.05
+```{r ttduod}
 
-```{r toptable}
 
-ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf, p.value = 0.05, lfc = 0.5 )
+#from ?topTable()
+# Although topTable enables users to set p-value and lfc cutoffs simultaneously, this is not generally recommended. If the fold changes and p-values are not highly correlated, then the use of a fold change cutoff can increase the false discovery rate above the nominal level. Users wanting to use fold change thresholding are usually recommended to use treat and topTreat instead.
+
+#In general, the adjusted p-values returned by adjust.method=BH remain #valid as FDR bounds only when the genes remain sorted by p-value. #Resorting the table by log-fold-change can increase the false discovery #rate above the nominal level for genes at the top of resorted table.
+
+#this gives the same number of up and down probes as decideTests(), but this won't always be the case I don't think, depending on the choice of methods in decideTests() and number of coefs.
+
+ttDuod <- topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf, p.value = 0.05)
+
+rownames(ttDuod)<-NULL
 
 pander(ttDuod %>%
-         mutate(Direction = ifelse(logFC<0, "DOWN", "UP"))%>%
-         select (TargetID, Direction, DEFINITION, adj.P.Val))
+select (TargetID, logFC, DEFINITION, adj.P.Val)%>%
+  head(., n= 10))
+  
         
 ```
 
@@ -513,6 +523,9 @@ mtn007_7d_9cm<-read.csv("raw_data/mtn-007-7d-9cm-DEGs.csv")
 
 overlap<-ttDuod[ttDuod$TargetID %in% mtn007_7d_9cm$TargetId,]%>%
   select(TargetID, DEFINITION, logFC)
+rownames(overlap)<- NULL
+names(overlap)[3]<- "logFC in PreP Study"
+
 
 pander(overlap)
 
