@@ -61,8 +61,8 @@ Number of DE probes for each contrast
 
 The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were 152 down-regulated probes and 120 up-regulated probes.
 
-Changes in the Duodenum pre vs post-PreP: p-value cut-off = 0.05
-----------------------------------------------------------------
+top 10 changes in the Duodenum pre vs post-PreP: p-value cut-off = 0.05
+-----------------------------------------------------------------------
 
 <table style="width:85%;">
 <colgroup>
@@ -888,66 +888,56 @@ Here I am comparing the probes in this experiment to significantly differentiall
 Which DE probes from the PreP study overlap with those from MTN-007?
 --------------------------------------------------------------------
 
-<table style="width:82%;">
+<table style="width:88%;">
 <colgroup>
-<col width="13%" />
 <col width="15%" />
 <col width="43%" />
-<col width="9%" />
+<col width="29%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center"> </th>
 <th align="center">TargetID</th>
 <th align="center">DEFINITION</th>
-<th align="center">logFC</th>
+<th align="center">logFC in PreP Study</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center"><strong>30</strong></td>
 <td align="center">MUPCDH</td>
 <td align="center">Homo sapiens mucin-like protocadherin (MUPCDH), transcript variant 1, mRNA.</td>
 <td align="center">-0.5277</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>38</strong></td>
 <td align="center">EDN3</td>
 <td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 3, mRNA.</td>
 <td align="center">-0.6583</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>64</strong></td>
 <td align="center">GOLPH4</td>
 <td align="center">Homo sapiens golgi phosphoprotein 4 (GOLPH4), mRNA.</td>
 <td align="center">-0.5256</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>85</strong></td>
 <td align="center">FAM23A</td>
 <td align="center">Homo sapiens family with sequence similarity 23, member A (FAM23A), mRNA.</td>
 <td align="center">-0.276</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>150</strong></td>
 <td align="center">PTGDS</td>
 <td align="center">Homo sapiens prostaglandin D2 synthase 21kDa (brain) (PTGDS), mRNA.</td>
 <td align="center">0.4569</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>161</strong></td>
 <td align="center">NUSAP1</td>
 <td align="center">Homo sapiens nucleolar and spindle associated protein 1 (NUSAP1), transcript variant 2, mRNA.</td>
 <td align="center">0.4414</td>
 </tr>
 <tr class="odd">
-<td align="center"><strong>166</strong></td>
 <td align="center">TOP2A</td>
 <td align="center">Homo sapiens topoisomerase (DNA) II alpha 170kDa (TOP2A), mRNA.</td>
 <td align="center">0.4312</td>
 </tr>
 <tr class="even">
-<td align="center"><strong>190</strong></td>
 <td align="center">EDN3</td>
 <td align="center">Homo sapiens endothelin 3 (EDN3), transcript variant 2, mRNA.</td>
 <td align="center">-0.5274</td>

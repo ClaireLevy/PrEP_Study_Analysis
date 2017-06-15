@@ -317,7 +317,7 @@ px_summary<-fit_results(px_fit2)
 The duodenal samples were the only ones with any differentially expressed probes. For Visit2 relative to enrollment, there were `r duod_summary$down` down-regulated probes and `r duod_summary$up` up-regulated probes.
 
 
-## Changes in the Duodenum pre vs post-PreP: p-value cut-off = 0.05
+## top 10 changes in the Duodenum pre vs post-PreP: p-value cut-off = 0.05
 ```{r ttduod}
 
 
