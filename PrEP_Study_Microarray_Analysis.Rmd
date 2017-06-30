@@ -651,7 +651,7 @@ camera_results(camera_function(rec_expressed, inf_a_founders_set))
 ####PBMC sample results
 ```{r }
 camera_results(camera_function(pb_expressed, inf_a_founders_set))
-```
+```I
 
 ####PAXgene sample results
 ```{r}
@@ -749,12 +749,46 @@ pander(camera_PrEP_Truvada_60Days_Daily_Oral)
 
 
 
-```{r}
+```{r exprs for cross-study analysis function }
+
+library(stringr)
+library(reshape2)
+
+get_exprs_for_cross_study_analysis<- function(expressedProbes, Tissue){
+  x<-exprs(expressedProbes)%>%
+  melt(x, id.vars =  rownames(x), varnames = c("ProbeId", "Ptid"),value.name = "Expression")%>%
+  mutate(Sample = Tissue)%>%
+  mutate(Visit = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "60 days"))%>%
+  mutate(Treatment = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "Truvada"))%>%
+  mutate(TreatmentLocation = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "Oral"))%>%
+  mutate(TreatmentInterval = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "Daily"))%>%
+  mutate(TreatmentLength = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "60 days"))
+
+y<-select(fData(expressedProbes),ProbeID, TargetID, ENTREZ_GENE_ID)
+
+z<-merge(x, y, by.x = "ProbeId", by.y = "ProbeID")
+
+names(z)[10:11]<-c("Gene", "EntrezId")
+
+return(z)
+  
+}
+```
+
+```{r get exprs}
+
+#already have eSets vector of esets for each tissue
+#here is a vector of tissue types to loop over:
+
+tissue<-c("Duodenum","Rectum","PBMC","PAXgene")
 
 
+all_exprs<-mapply(get_exprs_for_cross_study_analysis, expressedProbes = eSets, Tissue = tissue, SIMPLIFY = FALSE)
 
+PrEP_filtered_expression_values<-bind_rows(all_exprs)
 
+save(PrEP_filtered_expression_values, file = "../../Tenofovir R01/Cross-StudyMicroarrayAnalysis/data-in/PrEP-filtered-expression-values.Rda")
 
-
+save(PrEP_filtered_expression_values,file = "R_output/PrEP-filtered-expression-values.Rda")
 
 ```
