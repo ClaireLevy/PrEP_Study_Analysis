@@ -28,6 +28,8 @@ library(pander)
 library(stringr)
 library(reshape2)
 library(ggplot2)
+library(ggrepel)
+library(RColorBrewer)
 
 ```
 
@@ -265,12 +267,90 @@ eBayes(fit2)
 
 #fit model to each tissue
 duod_fit2<-fit_model(duod_expressed)
+
+ttDuod<-topTable(duod_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf)
+
+write.csv(ttDuod, file = "data_out/PrEP-Truvada-Oral-60Days-Daily-Duodenum-complete.csv" )
+
 rec_fit2<-fit_model(rec_expressed)
+ttRec<-topTable(rec_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf)
+# write.csv(ttRec, file = "data_out/PrEP-Truvada-Oral-60Days-Daily-15cmRectum-complete.csv" )
+
 pb_fit2<-fit_model(pb_expressed)
+
+# ttPb<-topTable(pb_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf)
+# 
+# write.csv(ttPb, file = "data_out/PrEP-Truvada-Oral-60Days-Daily-PBMC-complete.csv" )
+
+
 px_fit2<-fit_model(px_expressed)
 
+# ttPx<-topTable(px_fit2, coef = "Visit2vsEnrollment", adjust.method = "BH", number = Inf)
+# 
+# write.csv(ttPx, file = "data_out/PrEP-Truvada-Oral-60Days-Daily-PAXgene-complete.csv" )
 ```
 
+## Volcano plots of each tissue
+
+The log odds of differential expression is a statistic about the chances that a probe is differentially expressed. Log odds of 0 means that there is a 50/50 chance that the probe is differentially expressed (if log odds = 0, odds = 10^0^. Probability = odds/1+odds. 10^0^/1+10^0^ = 1/2 = 50%) This statistic is already adjusted for multiple testing. Negative odds indicate the probability that the probes is *not* differentially expressed.
+
+```{r volcano plot function}
+
+load("R_output/rec_expressed.Rdata")
+load("R_output/pb_expressed.Rdata")
+load("R_output/px_expressed.Rdata")
+load("R_output/duod_expressed.Rdata")
+
+
+#list of exprs
+expressed_probes<-list(duod_expressed,rec_expressed,pb_expressed,px_expressed)
+
+#names to use for the list of toptables
+ttNames<-c("Duodenum","15cm Rectum","PBMC","PAXgene")
+
+
+
+ttVolcano<- function(expressed_list, ttNames, contrast){
+x<-lapply(expressed_list, FUN = fit_model)
+y<-lapply(x, FUN = topTable,coef = contrast,
+          adjust.method = "BH", number = Inf)
+names(y)<-ttNames
+z<-bind_rows(y, .id = "Tissue")
+z<-z%>%
+  mutate(Significance = ifelse(adj.P.Val <= 0.05, "<=0.05", ">0.05"))
+
+
+ggplot(z,aes(x = logFC, y = B))+
+  geom_point(aes(),size = 1.7, alpha= 0.5)  +
+  theme_bw(base_size = 16) +
+  geom_text_repel(
+    data = subset(z, adj.P.Val < 3E-10),
+    aes(label = TargetID),
+    size = 3,
+    box.padding = unit(0.35, "lines"),
+    point.padding = unit(0.3, "lines"))+
+  facet_wrap(~Tissue)+
+  labs(y = "Log Odds of Differential Expression")
+
+
+
+}
+
+ttVolcano(expressed_list = expressed_probes, ttNames = ttNames, contrast = "Visit2vsEnrollment" )
+
+
+#From  http://vassarstats.net/tabs.html#odds1
+# Given p, an observed proportion or probability:
+# Odds = p/(1-p) 
+# Log Odds: LO = loge[Odds]= loge[p/(1-p)] 
+# Given the Log Odds: Odds = exp[LO]
+# Given the Odds: p = Odds/(1+Odds) 
+
+#so 80% probability = odds of 4:1 
+#log e (4) = 
+
+
+```
 
 ```{r results summary function}
 
@@ -577,4 +657,104 @@ camera_results(camera_function(pb_expressed, inf_a_founders_set))
 ```{r}
 
 camera_results(camera_function(px_expressed, inf_a_founders_set))
+```
+
+```{r CAMERA with tenofovir studies genesets}
+
+#load the expression sets to test
+load("R_output/duod_expressed.Rdata")
+load("R_output/px_expressed.Rdata")
+load("R_output/rec_expressed.Rdata")
+load("R_output/pb_expressed.Rdata")
+load("R_output/pData.Rdata")
+
+
+
+#run the camera function and load libraries!
+#load the genesets
+load("../../Tenofovir R01/Cross-StudyMicroarrayAnalysis/data-out/up_and_down_gsets.Rda")
+
+
+```
+
+### CAMERA tests using DE probes from all Tenofovir studies as genesets
+```{r compilation camera function}
+
+
+#here is a function that takes an expression set and a geneset, makes the appropriate contrast, generates identifiers (the entrez ids from the data to be tested) and makes an index of the geneset using the identifiers AND runs the camera function.
+
+#Here you need to provide an expression set to the "expressedProbes" argument and the name of the data that you are doing the camera test on, using the format we designated for the cross study analyis. 
+
+
+
+cross_study_camera_function<-function(expressedProbes, Condition){
+  
+Ptid <- pData(expressedProbes)$Ptid #get pData just for that tissue
+
+Visit <-  pData(expressedProbes)$Visit
+
+design <- model.matrix(~0+ Visit + Ptid)
+
+contrast <-makeContrasts(
+  Visit2vsEnrollment = VisitVisit2-VisitEnrollment, levels = design)
+
+#IDs from eSet that I'll use for camera: entrezIDs *from the data I'm analyzing* (not the pre-determined gene set). 
+
+identifiers <- as.character(fData(expressedProbes)[,"ENTREZ_GENE_ID"])
+
+#make the index of the geneSet using identifiers from my eSet
+index <- ids2indices(gene.sets = up_and_down_gsets, identifiers = identifiers)
+
+result<-camera(y = exprs(expressedProbes), index = index, design = design, contrast = contrast) 
+
+
+result$Gene_Set<- rownames(result)
+rownames(result)<-NULL
+
+result$Data_Tested<-Condition
+
+result<- select(result, Data_Tested, Gene_Set, Direction, NGenes, PValue, FDR )
+
+return(result)
+
+}
+
+
+```
+
+
+
+```{r camera test with tenfovir study genesets}
+
+# a vector of expression sets to camera test
+eSets<-c(duod_expressed, rec_expressed, pb_expressed, px_expressed)
+
+#a vector of the official cross-study analysis names for each condition in this study that I'm testing.
+conds<-c("PrEP-Truvada-60Days-Daily-Oral-Duodenum","PrEP-Truvada-60Days-Daily-Oral-Rectum","PrEP-Truvada-60Days-Daily-Oral-PBMC","PrEP-Truvada-60Days-Daily-Oral-PAXgene")
+
+#use mapply to iterate over both the eSets vector and the conditions vector, SIMPLFY = FALSE or else it makes it into a weird matrix thing.
+x<-mapply(FUN = cross_study_camera_function, expressedProbes = eSets, Condition  = conds, SIMPLIFY = FALSE)
+
+camera_PrEP_Truvada_60Days_Daily_Oral<-bind_rows(x)
+
+
+save(camera_PrEP_Truvada_60Days_Daily_Oral, file = "../../Tenofovir R01/Cross-StudyMicroarrayAnalysis/data-in/camera_PrEP_Truvada_60Days_Daily_Oral.Rda")
+
+
+save(camera_PrEP_Truvada_60Days_Daily_Oral,file = "R_output/camera_PrEP_Truvada_60Days_Daily_Oral.Rda")
+
+
+pander(camera_PrEP_Truvada_60Days_Daily_Oral)
+```
+
+
+
+```{r}
+
+
+
+
+
+
+
 ```
