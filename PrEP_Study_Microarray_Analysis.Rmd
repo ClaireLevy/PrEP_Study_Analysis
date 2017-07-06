@@ -758,11 +758,11 @@ get_exprs_for_cross_study_analysis<- function(expressedProbes, Tissue){
   x<-exprs(expressedProbes)%>%
   melt(x, id.vars =  rownames(x), varnames = c("ProbeId", "Ptid"),value.name = "Expression")%>%
   mutate(Sample = Tissue)%>%
-  mutate(Visit = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "60 days"))%>%
-  mutate(Treatment = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "Truvada"))%>%
-  mutate(TreatmentLocation = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "Oral"))%>%
-  mutate(TreatmentInterval = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "Daily"))%>%
-  mutate(TreatmentLength = ifelse(str_detect(Sample, "Enrollment"), "Baseline", "60 days"))
+  mutate(Visit = ifelse(str_detect(Ptid, "Enrollment"), "Baseline", "60 days"))%>%
+  mutate(Treatment = ifelse(str_detect(Ptid, "Enrollment"), "Baseline", "Truvada"))%>%
+  mutate(TreatmentLocation = ifelse(str_detect(Ptid, "Enrollment"), "Baseline", "Oral"))%>%
+  mutate(TreatmentInterval = ifelse(str_detect(Ptid, "Enrollment"), "Baseline", "Daily"))%>%
+  mutate(TreatmentLength = ifelse(str_detect(Ptid, "Enrollment"), "Baseline", "60 days"))
 
 y<-select(fData(expressedProbes),ProbeID, TargetID, ENTREZ_GENE_ID)
 
@@ -783,12 +783,16 @@ return(z)
 tissue<-c("Duodenum","Rectum","PBMC","PAXgene")
 
 
-all_exprs<-mapply(get_exprs_for_cross_study_analysis, expressedProbes = eSets, Tissue = tissue, SIMPLIFY = FALSE)
+all_exprs<-mapply(get_exprs_for_cross_study_analysis, expressedProbes = eSets, 
+  Tissue = tissue, SIMPLIFY = FALSE)
 
-PrEP_filtered_expression_values<-bind_rows(all_exprs)
+prep<-bind_rows(all_exprs)
 
-save(PrEP_filtered_expression_values, file = "../../Tenofovir R01/Cross-StudyMicroarrayAnalysis/data-in/PrEP-filtered-expression-values.Rda")
+prep <- prep %>% 
+  mutate(Ptid = as.integer(str_sub(Ptid, 5, 5)), Study = "PrEP")
 
-save(PrEP_filtered_expression_values,file = "R_output/PrEP-filtered-expression-values.Rda")
+save(prep, file = "../../Tenofovir R01/Cross-StudyMicroarrayAnalysis/data-in/PrEP-filtered-expression-values.Rda")
+
+save(prep, file = "R_output/PrEP-filtered-expression-values.Rda")
 
 ```
